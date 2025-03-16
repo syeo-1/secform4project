@@ -1,0 +1,175 @@
+<SEC-DOCUMENT>0001158463-25-000044.txt : 20250312
+<SEC-HEADER>0001158463-25-000044.hdr.sgml : 20250312
+<ACCEPTANCE-DATETIME>20250312215740
+ACCESSION NUMBER:		0001158463-25-000044
+CONFORMED SUBMISSION TYPE:	4
+PUBLIC DOCUMENT COUNT:		1
+CONFORMED PERIOD OF REPORT:	20250310
+FILED AS OF DATE:		20250312
+DATE AS OF CHANGE:		20250312
+
+REPORTING-OWNER:	
+
+	OWNER DATA:	
+		COMPANY CONFORMED NAME:			Clements Carol Ann
+		CENTRAL INDEX KEY:			0001858380
+		ORGANIZATION NAME:           	
+
+	FILING VALUES:
+		FORM TYPE:		4
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	000-49728
+		FILM NUMBER:		25733633
+
+	MAIL ADDRESS:	
+		STREET 1:		C/O JETBLUE AIRWAYS CORPORATION
+		STREET 2:		27-01 QUEENS PLAZA NORTH
+		CITY:			LONG ISLAND CITY
+		STATE:			NY
+		ZIP:			11101
+
+ISSUER:		
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			JETBLUE AIRWAYS CORP
+		CENTRAL INDEX KEY:			0001158463
+		STANDARD INDUSTRIAL CLASSIFICATION:	AIR TRANSPORTATION, SCHEDULED [4512]
+		ORGANIZATION NAME:           	01 Energy & Transportation
+		IRS NUMBER:				870617894
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	BUSINESS ADDRESS:	
+		STREET 1:		27-01 QUEENS PLAZA NORTH
+		CITY:			LONG ISLAND CITY
+		STATE:			NY
+		ZIP:			11101
+		BUSINESS PHONE:		7182867900
+
+	MAIL ADDRESS:	
+		STREET 1:		27-01 QUEENS PLAZA NORTH
+		CITY:			LONG ISLAND CITY
+		STATE:			NY
+		ZIP:			11101
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>4
+<SEQUENCE>1
+<FILENAME>wk-form4_1741831054.xml
+<DESCRIPTION>FORM 4
+<TEXT>
+<XML>
+<?xml version="1.0"?>
+<ownershipDocument>
+
+    <schemaVersion>X0508</schemaVersion>
+
+    <documentType>4</documentType>
+
+    <periodOfReport>2025-03-10</periodOfReport>
+
+    <notSubjectToSection16>0</notSubjectToSection16>
+
+    <issuer>
+        <issuerCik>0001158463</issuerCik>
+        <issuerName>JETBLUE AIRWAYS CORP</issuerName>
+        <issuerTradingSymbol>JBLU</issuerTradingSymbol>
+    </issuer>
+
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerCik>0001858380</rptOwnerCik>
+            <rptOwnerName>Clements Carol Ann</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerAddress>
+            <rptOwnerStreet1>JETBLUE AIRWAYS</rptOwnerStreet1>
+            <rptOwnerStreet2>27-01 QUEENS PLAZA NORTH</rptOwnerStreet2>
+            <rptOwnerCity>LONG ISLAND CITY</rptOwnerCity>
+            <rptOwnerState>NY</rptOwnerState>
+            <rptOwnerZipCode>11101</rptOwnerZipCode>
+            <rptOwnerStateDescription></rptOwnerStateDescription>
+        </reportingOwnerAddress>
+        <reportingOwnerRelationship>
+            <isDirector>0</isDirector>
+            <isOfficer>1</isOfficer>
+            <isTenPercentOwner>0</isTenPercentOwner>
+            <isOther>0</isOther>
+            <officerTitle>Chief Digital &amp; Tech Officer</officerTitle>
+            <otherText></otherText>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+
+    <aff10b5One>0</aff10b5One>
+
+    <nonDerivativeTable></nonDerivativeTable>
+
+    <derivativeTable>
+        <derivativeTransaction>
+            <securityTitle>
+                <value>Restricted Stock Units</value>
+            </securityTitle>
+            <conversionOrExercisePrice>
+                <footnoteId id="F1"/>
+            </conversionOrExercisePrice>
+            <transactionDate>
+                <value>2025-03-10</value>
+            </transactionDate>
+            <transactionCoding>
+                <transactionFormType>4</transactionFormType>
+                <transactionCode>A</transactionCode>
+                <equitySwapInvolved>0</equitySwapInvolved>
+            </transactionCoding>
+            <transactionAmounts>
+                <transactionShares>
+                    <value>110474</value>
+                </transactionShares>
+                <transactionPricePerShare>
+                    <footnoteId id="F1"/>
+                </transactionPricePerShare>
+                <transactionAcquiredDisposedCode>
+                    <value>A</value>
+                </transactionAcquiredDisposedCode>
+            </transactionAmounts>
+            <exerciseDate>
+                <footnoteId id="F2"/>
+            </exerciseDate>
+            <expirationDate>
+                <footnoteId id="F2"/>
+            </expirationDate>
+            <underlyingSecurity>
+                <underlyingSecurityTitle>
+                    <value>Common Stock</value>
+                </underlyingSecurityTitle>
+                <underlyingSecurityShares>
+                    <value>110474</value>
+                </underlyingSecurityShares>
+            </underlyingSecurity>
+            <postTransactionAmounts>
+                <sharesOwnedFollowingTransaction>
+                    <value>294910</value>
+                </sharesOwnedFollowingTransaction>
+            </postTransactionAmounts>
+            <ownershipNature>
+                <directOrIndirectOwnership>
+                    <value>D</value>
+                </directOrIndirectOwnership>
+            </ownershipNature>
+        </derivativeTransaction>
+    </derivativeTable>
+
+    <footnotes>
+        <footnote id="F1">Upon vesting, the Reporting Person is entitled to receive one share of common stock for each restricted stock unit.</footnote>
+        <footnote id="F2">Represents restricted stock units granted on March 10, 2025, which vest in equal annual installments over a three year period on each of the succeeding three anniversaries of the grant date.</footnote>
+    </footnotes>
+
+    <remarks></remarks>
+
+    <ownerSignature>
+        <signatureName>/s/ Shannon Collins, as Attorney-in-Fact</signatureName>
+        <signatureDate>2025-03-12</signatureDate>
+    </ownerSignature>
+</ownershipDocument>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
