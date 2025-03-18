@@ -15,7 +15,8 @@ FORM_4_TABLE_STATEMENT = '''
     transaction_time DATE,
     acceptance_time TEXT,
     retrieval_time DATE,
-    PRIMARY KEY (transaction_share_price, number_of_transaction_shares, acceptance_time)
+    original_file_url TEXT,
+    PRIMARY KEY (original_file_url, acceptance_time)
     );
 '''
 
@@ -31,7 +32,8 @@ def upload_form_4_data(db_user, db_name, db_password, data):
         transaction_share_price,
         transaction_time,
         acceptance_time,
-        retrieval_time
+        retrieval_time,
+        original_file_url
     '''
 
     connection = psycopg2.connect(f'dbname={db_name} user={db_user} password={db_password}')

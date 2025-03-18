@@ -20,3 +20,8 @@ https://www.sec.gov/Archives/edgar/data/1545565/000110465925023121/0001104659-25
 
 ## form 4 info regarding the two day delay in filing transactions
 https://www.sec.gov/files/forms-3-4-5.pdf
+
+
+## what if someone buys and sells at the same time?
+
+### so, there are several transactions within the same report, and all of them are non-derivative!

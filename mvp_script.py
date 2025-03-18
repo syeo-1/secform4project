@@ -86,7 +86,7 @@ def scrape_for_SEC_form(form_type, items_per_page, start_time=None, end_time=60)
             if not start_time:
                 start_time = formatted_table_data_datetime_match_string
                 start_time_date_object = datetime.strptime(start_time, DATETIME_FORMAT)
-                hour_before_start_datetime = start_time_date_object - timedelta(hours=1)
+                hour_before_start_datetime = start_time_date_object - timedelta(hours=2)
                 rounded_hour_before_start_datetime = hour_before_start_datetime.replace(minute=0, second=0)
                 # TODO: eventually need it to be searching back until a duplicate is detected in the database, so potentially an hour or more back!
             
@@ -106,6 +106,8 @@ def scrape_for_SEC_form(form_type, items_per_page, start_time=None, end_time=60)
     
     return all_formatted_text_links
         
+
+
 
 
     
