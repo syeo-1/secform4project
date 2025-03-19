@@ -25,3 +25,13 @@ https://www.sec.gov/files/forms-3-4-5.pdf
 ## what if someone buys and sells at the same time?
 
 ### so, there are several transactions within the same report, and all of them are non-derivative!
+
+### form 4 details: (section 8 useful for transaction codes)
+- https://www.sec.gov/about/forms/form4data.pdf
+
+### multi purchase
+https://www.sec.gov/Archives/edgar/data/1878542/000138746725000038/0001387467-25-000038-index.htm
+
+### focus on direct ownership. so this will be D in column 6 table 1
+### there can be a mix of things in table 1 (RSU with standard purchase!!)
+https://www.sec.gov/Archives/edgar/data/1859449/000161755325000024/0001617553-25-000024-index.htm
