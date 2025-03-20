@@ -35,3 +35,10 @@ https://www.sec.gov/Archives/edgar/data/1878542/000138746725000038/0001387467-25
 ### focus on direct ownership. so this will be D in column 6 table 1
 ### there can be a mix of things in table 1 (RSU with standard purchase!!)
 https://www.sec.gov/Archives/edgar/data/1859449/000161755325000024/0001617553-25-000024-index.htm
+
+### cannot process transaction code V as well for non-derivative transactions:
+- https://www.sec.gov/Archives/edgar/data/103379/000112760224011589/xslF345X05/form4.xml
+or mayber this one according to chatgpt
+- https://www.sec.gov/Archives/edgar/data/320193/000032019324000132/xslF345X05/wk-form4_1734564614.xml
+### I think this one actually has the v code marked!
+- https://www.sec.gov/Archives/edgar/data/1108524/000112760223018474/xslF345X04/form4.xml
