@@ -3,3 +3,6 @@ winvenv
 *.html
 *.txt
 __pycache__
+airflow/logs
+airflow/airflow*
+airflow/webserver_config.py
