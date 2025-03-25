@@ -58,10 +58,33 @@ def extract_non_derivative_form_4_info(soup):
     eastern_timezone = pytz.timezone('US/Eastern')
 
 
-    reporting_owner_name = soup.select('rptOwnerName')[0].text
-    issuer_name = soup.select('issuerName')[0].text
-    ticker_symbol = soup.select('issuerTradingSymbol')[0].text
-    acceptance_time = soup.select('acceptance-datetime')[0].text.split()[0]
+    try:
+        reporting_owner_name = soup.select('rptOwnerName')[0].text
+        if reporting_owner_name == '':
+            reporting_owner_name = None
+    except:
+        reporting_owner_name = None
+    
+    try:
+        issuer_name = soup.select('issuerName')[0].text
+        if issuer_name == '':
+            issuer_name = None
+    except:
+        issuer_name = None
+
+    try:
+        ticker_symbol = soup.select('issuerTradingSymbol')[0].text
+        if ticker_symbol == '':
+            ticker_symbol = None
+    except:
+        ticker_symbol = None
+    
+    try:
+        acceptance_time = soup.select('acceptance-datetime')[0].text.split()[0]
+        if acceptance_time == '':
+            acceptance_time = None
+    except:
+        acceptance_time = None
     
     non_derivative_transactions = soup.select('nonDerivativeTransaction')
 
@@ -270,7 +293,7 @@ def scrape_for_SEC_form(form_type, items_per_page, start_time=None, end_time=60)
 
 def xml_to_soup(file):
     '''takes xml formatted text input and returns a Soup xml object'''
-    return BeautifulSoup(file, 'lxml')
+    return BeautifulSoup(file, features='xml')
 
 def is_non_derivative_non_RSU_transaction(form_4_contents):
     '''

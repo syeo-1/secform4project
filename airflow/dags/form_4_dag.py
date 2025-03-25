@@ -86,7 +86,7 @@ def form_4_data_pipeline():
         '''
             load the filtered data to the database connection
         '''
-        pass
+        print(filtered_form_4_data)
 
     
     form_4_links = retrieve_form_links()
