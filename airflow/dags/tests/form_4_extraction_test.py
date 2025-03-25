@@ -1,5 +1,5 @@
 import pytest
-from common import extract
+from common_functions import extract
 
 
 def test_form_4_standard_disposal():
