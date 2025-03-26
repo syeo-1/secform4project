@@ -7,6 +7,7 @@ from common_functions.extract import extract_non_derivative_form_4_info, xml_to_
 from common_functions.transform import filter_out_form_4_data
 from bs4 import BeautifulSoup
 import requests
+import logging
 
 
 default_args = {
@@ -32,8 +33,9 @@ def form_4_data_pipeline():
         # https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039-index.htm
         # https://www.sec.gov/Archives/edgar/data/1991805/000095015725000265/0000950157-25-000265-index.htm
         return [
-            'https://www.sec.gov/Archives/edgar/data/1991805/000095015725000265/0000950157-25-000265.txt'
-            'https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039.txt'
+            'https://www.sec.gov/Archives/edgar/data/1991805/000095015725000265/0000950157-25-000265.txt',
+            'https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039.txt',
+            'https://www.sec.gov/Archives/edgar/data/1404430/000110465925025206/0001104659-25-025206.txt'
         ]
 
         
@@ -50,17 +52,17 @@ def form_4_data_pipeline():
             try:
                 form_data = requests.get(link, headers=HEADERS).content
             except requests.exceptions.ConnectionError as connection_error:
-                print(f'A connection error occured when trying to connect to the resourcce: {connection_error}')
+                logging.info(f'A connection error occured when trying to connect to the resourcce: {connection_error}')
             except requests.exceptions.ConnectTimeout as timeout_connection:
-                print(f'A connection timeout error occured: {timeout_connection}')
+                logging.info(f'A connection timeout error occured: {timeout_connection}')
             except requests.exceptions.HTTPError as http_error:
-                print(f'An http error occured: {http_error}')
+                logging.info(f'An http error occured: {http_error}')
             except requests.exceptions.InvalidURL as url_error:
-                print(f'An invalid url error occured: {url_error}')
+                logging.info(f'An invalid url error occured: {url_error}')
             except requests.exceptions.InvalidHeader as http_header_error:
-                print(f'An invalid http header error occured: {http_header_error}')
+                logging.info(f'An invalid http header error occured: {http_header_error}')
             except Exception as e:
-                print(f'An unexpected error occured, please check: {e}')
+                logging.info(f'An unexpected error occured, please check: {e}')
 
 
             form_4_soup = xml_to_soup(form_data)
@@ -86,7 +88,9 @@ def form_4_data_pipeline():
         '''
             load the filtered data to the database connection
         '''
-        print(filtered_form_4_data)
+        # logging.info(filtered_form_4_data)
+        logging.info(filtered_form_data)
+        return filtered_form_data
 
     
     form_4_links = retrieve_form_links()

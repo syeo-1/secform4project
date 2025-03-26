@@ -31,17 +31,16 @@ def filter_out_form_4_data(all_form_4_data):
     filtered_form_4_data = []
 
     for form_4_data in all_form_4_data:
-        transaction_code = form_4_data[7]
-        ownership_form = form_4_data[12]
+        transaction_code = form_4_data['transaction_code']
+        ownership_form = form_4_data['ownership_form']
 
         # person's ownership must be direct (ie. buyer/seller is actively attempting to buy/sell stock)
         # the transaction must be a standard Purchase, Sell, or for whatever reason, they report a purchase/sell
         # earlier than they have to (V code)
         # for more info: https://www.sec.gov/edgar/searchedgar/ownershipformcodes.html
-        if ownership_form != 'D' and transaction_code not in ['P', 'S', 'V']:
-            continue
+        if ownership_form == 'D' and transaction_code in ['P', 'S', 'V']:
+            filtered_form_4_data.append(form_4_data)
 
-        filtered_form_4_data.append(form_4_data)
 
     return filtered_form_4_data
 

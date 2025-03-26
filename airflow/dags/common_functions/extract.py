@@ -172,22 +172,22 @@ def extract_non_derivative_form_4_info(soup):
         )
         print('===')
 
-        all_extracted_non_derivative_data.append([
-            reporting_owner_name,
-            issuer_name,
-            ticker_symbol,
-            acceptance_time,
-            security_title,
-            transaction_date,
-            deemed_execution_date,
-            transaction_code,
-            num_transaction_shares,
-            acquired_or_dispose,
-            transaction_share_price,
-            amount_owned_after_transaction,
-            ownership_form,
+        all_extracted_non_derivative_data.append({
+            'reporting_owner_name': reporting_owner_name,
+            'issuer_name': issuer_name,
+            'ticker_symbol': ticker_symbol,
+            'acceptance_time': acceptance_time,
+            'security_title': security_title,
+            'transaction_date': transaction_date,
+            'deemed_execution_date': deemed_execution_date,
+            'transaction_code': transaction_code,
+            'num_transaction_shares': num_transaction_shares,
+            'acquired_or_dispose': acquired_or_dispose,
+            'transaction_share_price': transaction_share_price,
+            'amount_owned_after_transaction': amount_owned_after_transaction,
+            'ownership_form': ownership_form,
             # extraction_time
-        ])
+        })
 
 
     return all_extracted_non_derivative_data
