@@ -3,7 +3,7 @@ from datetime import timedelta, datetime
 # import os
 # import sys
 # sys.path.append('/opt/airflow/common_functions')
-from common_functions.extract import extract_non_derivative_form_4_info, xml_to_soup, HEADERS
+from common_functions.extract import scrape_for_SEC_form, extract_non_derivative_form_4_info, xml_to_soup, HEADERS
 from common_functions.transform import filter_out_form_4_data
 from bs4 import BeautifulSoup
 import requests
@@ -33,11 +33,12 @@ def form_4_data_pipeline():
         # return a single dummy link for now
         # https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039-index.htm
         # https://www.sec.gov/Archives/edgar/data/1991805/000095015725000265/0000950157-25-000265-index.htm
-        return [
-            'https://www.sec.gov/Archives/edgar/data/1991805/000095015725000265/0000950157-25-000265.txt',
-            'https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039.txt',
-            'https://www.sec.gov/Archives/edgar/data/1404430/000110465925025206/0001104659-25-025206.txt'
-        ]
+        # return [
+        #     'https://www.sec.gov/Archives/edgar/data/1991805/000095015725000265/0000950157-25-000265.txt',
+        #     'https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039.txt',
+        #     'https://www.sec.gov/Archives/edgar/data/1404430/000110465925025206/0001104659-25-025206.txt'
+        # ]
+        return scrape_for_SEC_form(4, 100)
 
 
         
