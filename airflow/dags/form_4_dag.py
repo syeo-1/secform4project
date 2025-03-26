@@ -8,6 +8,7 @@ from common_functions.transform import filter_out_form_4_data
 from bs4 import BeautifulSoup
 import requests
 import logging
+from pprint import pformat
 
 
 default_args = {
@@ -37,6 +38,7 @@ def form_4_data_pipeline():
             'https://www.sec.gov/Archives/edgar/data/1888289/000182176925000039/0001821769-25-000039.txt',
             'https://www.sec.gov/Archives/edgar/data/1404430/000110465925025206/0001104659-25-025206.txt'
         ]
+
 
         
 
@@ -89,7 +91,7 @@ def form_4_data_pipeline():
             load the filtered data to the database connection
         '''
         # logging.info(filtered_form_4_data)
-        logging.info(filtered_form_data)
+        logging.info(pformat(filtered_form_data))
         return filtered_form_data
 
     
