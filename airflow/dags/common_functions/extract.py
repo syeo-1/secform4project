@@ -39,7 +39,7 @@ def extract_data_from_SEC_file_url(url_list, extraction_function):
 
 
 
-def extract_non_derivative_form_4_info(soup):
+def extract_non_derivative_form_4_info(soup, link):
     '''
     takes a soup object of xml data and extracts the following fields from form 4
 
@@ -168,9 +168,10 @@ def extract_non_derivative_form_4_info(soup):
             transaction_share_price,
             amount_owned_after_transaction,
             ownership_form,
+            link
             # extraction_time
         )
-        print('===')
+        # print('===')
 
         all_extracted_non_derivative_data.append({
             'reporting_owner_name': reporting_owner_name,
@@ -186,6 +187,7 @@ def extract_non_derivative_form_4_info(soup):
             'transaction_share_price': transaction_share_price,
             'amount_owned_after_transaction': amount_owned_after_transaction,
             'ownership_form': ownership_form,
+            'original_form_4_text_url': link
             # extraction_time
         })
 

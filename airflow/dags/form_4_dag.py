@@ -70,7 +70,7 @@ def form_4_data_pipeline():
 
             form_4_soup = xml_to_soup(form_data)
 
-            all_processed_form_4_data.extend(extract_non_derivative_form_4_info(form_4_soup))
+            all_processed_form_4_data.extend(extract_non_derivative_form_4_info(form_4_soup, link))
         
         return all_processed_form_4_data
 
