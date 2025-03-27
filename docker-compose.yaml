@@ -10,3 +10,21 @@ services:
       - "8080:8080"
     
     command: airflow standalone
+  
+  postgres:
+    image: postgres:15
+    container_name: sec_form_data
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - ./postgres-db-volume:/var/lib/postgresql/data
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8081:80"

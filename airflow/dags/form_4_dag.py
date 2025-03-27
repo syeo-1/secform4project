@@ -93,6 +93,12 @@ def form_4_data_pipeline():
         '''
         # logging.info(filtered_form_4_data)
         logging.info(pformat(filtered_form_data))
+
+        # should take a db connection
+
+        # check if connection is valid
+        # if the connection is valid, insert data into the db
+
         return filtered_form_data
 
     

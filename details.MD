@@ -42,3 +42,23 @@ or mayber this one according to chatgpt
 - https://www.sec.gov/Archives/edgar/data/320193/000032019324000132/xslF345X05/wk-form4_1734564614.xml
 ### I think this one actually has the v code marked!
 - https://www.sec.gov/Archives/edgar/data/1108524/000112760223018474/xslF345X04/form4.xml
+
+====================================
+
+### docker compose details
+- I'll want to try to create a dev/prod environment
+- got a recommendation to check out profiles in docker compose based on this reddit thread
+- https://www.reddit.com/r/docker/comments/13kxfjf/how_to_handle_dockercompose_for_production_and/
+- https://docs.docker.com/compose/how-tos/profiles/
+
+- right now the goal will be to create airflow and postgres within the same docker compose and
+set it up so that the volume is within the container itself. When I move to AWS, the goal will be to
+set up RDS so that data will instead be saved there
+
+### docker compose and networking for postgres and pgadmin
+- https://docs.docker.com/compose/how-tos/networking/
+- by default, a network called myapp_default is created when using docker compose files
+- so with that in mind, pgadmin should be able to communicate with the database for the data
+- be sure to use the container_name field of your postgres instance when connecting to the database from pgadmin
+    - this will be the hostname/address field!
+- also I had to manually create an empty postgres-db-volume folder to correspond to the volumes parameter within this project directory
