@@ -19,7 +19,9 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - ./postgres-db-volume:/var/lib/postgresql/data
+      - "C:/Users/seans/OneDrive/Desktop/data-zoomcamp/sec-form4-project/postgres-db-volume:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
   
   pgadmin:
     image: dpage/pgadmin4

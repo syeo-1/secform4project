@@ -28,7 +28,8 @@ FORM_4_TABLE_STATEMENT = '''
     amount_owned_after_transaction TEXT,
     ownership_form TEXT,
     original_form_4_text_url TEXT,
-    PRIMARY KEY(acceptance_time, reporting_owner_name, ticker_symbol, amount_owned_after_transaction)
+    PRIMARY KEY(acceptance_time, reporting_owner_name, ticker_symbol, amount_owned_after_transaction),
+    CONSTRAINT form_4_constraint UNIQUE (acceptance_time, reporting_owner_name, ticker_symbol, amount_owned_after_transaction)
     );
 '''
 
@@ -59,11 +60,11 @@ def upload_form_4_data(db_user, db_name, db_password, host, form_4_data):
     # tz = timezone('US/Eastern')
     # data.append(str(datetime.now(tz)))
 
-    try:
-        cursor.execute(FORM_4_TABLE_DROP)
-        print('form 4 table dropped')
-    except Exception as e:
-        print(e)
+    # try:
+    #     cursor.execute(FORM_4_TABLE_DROP)
+    #     print('form 4 table dropped')
+    # except Exception as e:
+    #     print(e)
 
     try:
         cursor.execute(FORM_4_TABLE_STATEMENT)
@@ -95,7 +96,7 @@ def upload_form_4_data(db_user, db_name, db_password, host, form_4_data):
                 %s,
                 %s,
                 %s
-                )
+                ) ON CONFLICT (acceptance_time, reporting_owner_name, ticker_symbol, amount_owned_after_transaction) DO NOTHING
             ''', tuple(data.values()))
             print(f'query to insert price data is successful')
         except psycopg2.Error as postgres_insert_error:
