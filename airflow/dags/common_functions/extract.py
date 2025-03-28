@@ -80,11 +80,14 @@ def extract_non_derivative_form_4_info(soup, link):
         ticker_symbol = None
     
     try:
-        acceptance_time = soup.select('acceptance-datetime')[0].text.split()[0]
-        if acceptance_time == '':
-            acceptance_time = None
+        acceptance_time_unformatted = soup.select('ACCEPTANCE-DATETIME')[0].text.split()[0]
+        datetime_obj = datetime.strptime(acceptance_time_unformatted, '%Y%m%d%H%M%S')
+        acceptance_time_formatted = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
+        # print(f'acceptance time is: {acceptance_time}')
+        if acceptance_time_formatted == '':
+            acceptance_time_formatted = None
     except:
-        acceptance_time = None
+        acceptance_time_formatted = None
     
     non_derivative_transactions = soup.select('nonDerivativeTransaction')
 
@@ -158,7 +161,7 @@ def extract_non_derivative_form_4_info(soup, link):
             reporting_owner_name,
             issuer_name,
             ticker_symbol,
-            acceptance_time,
+            acceptance_time_formatted,
             security_title,
             transaction_date,
             deemed_execution_date,
@@ -177,12 +180,12 @@ def extract_non_derivative_form_4_info(soup, link):
             'reporting_owner_name': reporting_owner_name,
             'issuer_name': issuer_name,
             'ticker_symbol': ticker_symbol,
-            'acceptance_time': acceptance_time,
+            'acceptance_time': acceptance_time_formatted,
             'security_title': security_title,
             'transaction_date': transaction_date,
             'deemed_execution_date': deemed_execution_date,
             'transaction_code': transaction_code,
-            'num_transaction_shares': num_transaction_shares,
+            'num_transaction_shares': int(float(num_transaction_shares)),
             'acquired_or_dispose': acquired_or_dispose,
             'transaction_share_price': transaction_share_price,
             'amount_owned_after_transaction': amount_owned_after_transaction,
@@ -317,7 +320,7 @@ def main():
     # with open(r'C:\Users\seans\OneDrive\Desktop\data-zoomcamp\sec-form4-project\tests\workday_standard_disposal.xml') as file:
     # with open(r'C:\Users\seans\OneDrive\Desktop\data-zoomcamp\sec-form4-project\tests\jetblue_RSU_acquisition.xml') as file:
     # with open(r'C:\Users\seans\OneDrive\Desktop\data-zoomcamp\sec-form4-project\tests\RSU_with_disposal.xml') as file:
-    with open(r'C:\Users\seans\OneDrive\Desktop\data-zoomcamp\sec-form4-project\tests\softbank_derivative_acquisition.xml') as file:
+    with open(r'C:\Users\seans\OneDrive\Desktop\data-zoomcamp\sec-form4-project\airflow\dags\tests\softbank_derivative_acquisition.xml') as file:
     # with open(r'C:\Users\seans\OneDrive\Desktop\data-zoomcamp\sec-form4-project\tests\draftking_multi_disposal.xml') as file:
         # for line in file:
         #     print(line)
@@ -328,7 +331,7 @@ def main():
     # print(a)
     # print(xml_soup.select('transactionShares > value')[0].text)
     # print(xml_soup.find_all(attrs={'refs': 'value'}))
-    extract_non_derivative_form_4_info(xml_soup)
+    extract_non_derivative_form_4_info(xml_soup, 'dummy.txt')
     
 
 if __name__ == '__main__':

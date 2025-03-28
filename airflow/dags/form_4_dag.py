@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import requests
 import logging
 from pprint import pformat
+from common_functions.load import upload_form_4_data
 
 
 default_args = {
@@ -93,6 +94,7 @@ def form_4_data_pipeline():
         '''
         # logging.info(filtered_form_4_data)
         logging.info(pformat(filtered_form_data))
+        upload_form_4_data('airflow', 'airflow', 'airflow', 'sec_form_data', filtered_form_data)
 
         # should take a db connection
 
