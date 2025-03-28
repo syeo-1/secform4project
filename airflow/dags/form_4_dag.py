@@ -21,8 +21,9 @@ default_args = {
 @dag(
     dag_id = 'form_4_dag',
     default_args = default_args,
-    start_date = datetime(2024, 3, 23),
-    schedule_interval = '@once'
+    start_date = datetime(2024, 3, 27),
+    catchup = False,
+    schedule_interval = '@hourly'
 )
 def form_4_data_pipeline():
 
