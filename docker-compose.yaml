@@ -1,16 +1,55 @@
 version: '3'
 
+# volumes:
+#   airflow-dags
+
 services:
-  secform4airflow:
-    image: secform4project:latest
+  airflow-initialization:
+    image: apache/airflow:2.7.2
+    entrypoint: ["/bin/sh", "-c", "airflow db upgrade && cp -r /tmp/dags/. /opt/airflow/dags"]
     volumes:
-      - ./airflow:/opt/airflow
-    
+      - ./dags:/tmp/dags # mount local dags to /tmp/dags
+      - airflow-dags:/opt/airflow/dags
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    command: /bin/bash  # Prevent it from running something else after entrypoint
+  
+  airflow-webserver:
+    image: apache/airflow:2.7.2
+    restart: always
+    depends_on:
+      - airflow-initialization
+      - postgres # ensure postgres is up before starting this service
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor # allows for parallelism for eventual prod
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False # don't display example dags provided by airflow by default
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__WEBSERVER__AUTH_BACKEND=airflow.www.auth.backend.default
+    volumes:
+      - airflow-dags:/opt/airflow/dags
+      - airflow-logs:/opt/airflow/logs
+      - airflow-plugins:/opt/airflow/plugins
     ports:
       - "8080:8080"
-    
-    command: airflow standalone
-  
+    command: webserver
+
+  airflow-scheduler:
+    image: apache/airflow:2.7.2
+    restart: always
+    depends_on:
+      - airflow-initialization # ensure airflow initialization is done before the scheduler comes up
+      - postgres # postgres must be ready before the scheduler is brought up
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - airflow-logs:/opt/airflow/logs
+    command: scheduler # runs the dags
+
   postgres:
     image: postgres:15
     container_name: sec_form_data
@@ -19,9 +58,13 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - "C:/Users/seans/OneDrive/Desktop/data-zoomcamp/sec-form4-project/postgres-db-volume:/var/lib/postgresql/data"
+      - postgres-db-volume:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:  # Ensures Postgres is ready before Airflow starts, and health is maintained
+      test: ["CMD-SHELL", "pg_isready -U airflow"] # use CMD for simple commands when shell syntax isn't needed. CMD-SHELL for commands where shell features are needed (like pg_isready)
+      interval: 5s
+      retries: 5
   
   pgadmin:
     image: dpage/pgadmin4
@@ -30,3 +73,9 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - "8081:80"
+
+volumes: # ensure the following volumes are all managed by docker, not manual/by the system
+  airflow-dags: # for dags
+  airflow-logs: # for logs
+  airflow-plugins: # for plugins
+  postgres-db-volume: # for postgres data

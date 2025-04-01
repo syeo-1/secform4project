@@ -62,3 +62,7 @@ set up RDS so that data will instead be saved there
 - be sure to use the container_name field of your postgres instance when connecting to the database from pgadmin
     - this will be the hostname/address field!
 - also I had to manually create an empty postgres-db-volume folder to correspond to the volumes parameter within this project directory
+
+### need to be able to handle timezone transaction dates!
+eg. it's typically this: 2025-03-31 for example
+but sometimes can be something like this: 2025-03-26-05:00, which isn't valid in postgres
