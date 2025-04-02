@@ -7,3 +7,5 @@ airflow/logs
 airflow/airflow*
 airflow/webserver_config.py
 postgres-db-volume
+*.env
+config.py

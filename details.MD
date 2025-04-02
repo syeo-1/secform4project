@@ -66,3 +66,12 @@ set up RDS so that data will instead be saved there
 ### need to be able to handle timezone transaction dates!
 eg. it's typically this: 2025-03-31 for example
 but sometimes can be something like this: 2025-03-26-05:00, which isn't valid in postgres
+- also need to ensure 
+
+### if it's necessary, may need to create a default admin user if airflow won't let you login
+- do the following:
+    - docker exec -it <docker service id> bash
+        - get the id of the airflow webserver service from docker desktop for the service
+    - run the following command to set up a default admin user
+        - airflow users  create --role Admin --username admin --email admin --firstname admin --lastname admin --password admin
+    - should now be able to login with username: admin, password: admin
