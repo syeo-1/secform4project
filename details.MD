@@ -75,3 +75,16 @@ but sometimes can be something like this: 2025-03-26-05:00, which isn't valid in
     - run the following command to set up a default admin user
         - airflow users  create --role Admin --username admin --email admin --firstname admin --lastname admin --password admin
     - should now be able to login with username: admin, password: admin
+
+### how should i be structuring the api endpoints?
+- i want to get data for the following from my data (eventually)
+- all trades for a particular ticker
+- all trades from a specific person
+- all trades/tickers from a particular industry
+- largest (top 10) movers in a particular industry
+- largest movers by company market cap
+
+    - I'll need to create another table with the following information
+    - ticker, industry, and company market cap
+        - the market cap info would have to be updated daily
+        - actually, so would the other two, if new companies get listed

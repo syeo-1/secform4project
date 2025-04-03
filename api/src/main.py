@@ -2,15 +2,20 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from .database import get_db
 from .models import Form_4_data
+from .routes import company_name, reporting_owner, ticker
 # from config import *
 
 # Initialize FastAPI
 app = FastAPI()
 
-@app.get("/data/")
-def get_users(db: Session = Depends(get_db)):
-    data = db.query(Form_4_data).all()
-    return data
+app.include_router(company_name.router)
+app.include_router(reporting_owner.router)
+app.include_router(ticker.router)
+
+# @app.get("/data/")
+# def get_users(db: Session = Depends(get_db)):
+#     data = db.query(Form_4_data).all()
+#     return data
 
 # @app.get('/')
 
