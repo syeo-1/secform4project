@@ -3,14 +3,18 @@ from fastapi import APIRouter, Depends
 from ..models import Form_4_data
 from sqlalchemy.orm import Session
 from ..database import get_db
+from sqlalchemy import select
 
 router = APIRouter()
 
-@router.get("/ticker/")
-def get_users(db: Session = Depends(get_db)):
-    data = db.query(Form_4_data).all()
-    return data
+@router.get(
+        '/ticker/{ticker}',
+        summary='Get Transactions for Ticker',
+    )
+def get_ticker_data(ticker: str, db: Session = Depends(get_db)):
+    '''get transactions related to a specific ticker symbol'''
+    query_statement = select(Form_4_data).where(Form_4_data.ticker_symbol == ticker)
+    result = db.execute(query_statement)
+    data = result.scalars().all()
 
-# @router.get("/users/{username}", tags=["users"])
-# async def read_user(username: str):
-#     return {"username": username}
+    return data
