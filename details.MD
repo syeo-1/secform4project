@@ -88,3 +88,12 @@ but sometimes can be something like this: 2025-03-26-05:00, which isn't valid in
     - ticker, industry, and company market cap
         - the market cap info would have to be updated daily
         - actually, so would the other two, if new companies get listed
+
+- for each of the routes, I can do things like /ticker/:specific_ticker
+    - or, /ticker/sort(?) maybe?
+
+- I can use this as a reference for fastapi backend: https://github.com/polarsource/
+    - example of using select statements in sqlalchemy: https://github.com/polarsource/polar/blob/main/server/polar/storefront/service.py
+
+- also an example of creating exceptions in Python: https://github.com/polarsource/polar/blob/main/server/polar/exceptions.py
+    - and how to use them: https://github.com/polarsource/polar/blob/main/server/polar/storefront/endpoints.py
