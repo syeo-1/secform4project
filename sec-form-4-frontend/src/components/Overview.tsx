@@ -1,0 +1,3 @@
+// give info about bigges gainers/losers of the day
+// plus also info about notable insiders worth tracking
+    // eg. Elon, Bezos, Zucc, Buffet, Jensen (nvidia) etc...
