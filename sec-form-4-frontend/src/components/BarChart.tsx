@@ -18,7 +18,7 @@ export default function ColorScale() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'inherit', justifyContent: 'center', width: '100%'}}>
-        <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: '100%', marginTop: 2}}>
+        <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: 600, margin: '0 auto', marginTop: 2}}>
         <Stack direction="row" spacing={1}>
             <TextField
             select
@@ -38,7 +38,7 @@ export default function ColorScale() {
         <BarChart
             height={300}
             sx={{
-                
+                flexDirection: 'inherit'
             }}
             width={500}
             grid={{ horizontal: true }}
