@@ -6,19 +6,20 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import OverviewCardInfo from './OverviewCardnfo';
 
 export default function Overview() {
     return (
         <>
             <Grid container>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <Paper>1</Paper>
+                    <OverviewCardInfo />
                 </Grid>
                 <Grid size={{ xs: 12, md: 4}}>
-                    <Paper>2</Paper>
+                    <OverviewCardInfo />
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <Paper>3</Paper>
+                    <OverviewCardInfo />
                 </Grid>
             </Grid>
         </>
