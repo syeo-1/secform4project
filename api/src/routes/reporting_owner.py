@@ -8,7 +8,7 @@ from sqlalchemy import select
 router = APIRouter()
 
 @router.get(
-        '/reporting_owner/{reporting_owner}',
+        '/api/reporting_owner/{reporting_owner}',
         summary='Get Transaction Related to a Specific Individual'
     )
 def get_reporting_owner_data(reporting_owner: str, db: Session = Depends(get_db)):

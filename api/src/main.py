@@ -3,10 +3,23 @@ from sqlalchemy.orm import Session
 from .database import get_db
 from .models import Form_4_data
 from .routes import company_name, reporting_owner, ticker
+from fastapi.middleware.cors import CORSMiddleware
 # from config import *
 
 # Initialize FastAPI
 app = FastAPI()
+
+origins = [
+    'http://localhost:5173'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(company_name.router)
 app.include_router(reporting_owner.router)

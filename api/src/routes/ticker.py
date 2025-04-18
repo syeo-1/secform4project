@@ -8,7 +8,7 @@ from sqlalchemy import select
 router = APIRouter()
 
 @router.get(
-        '/ticker/{ticker}',
+        '/api/ticker/{ticker}',
         summary='Get Transactions for Ticker',
     )
 def get_ticker_data(ticker: str, db: Session = Depends(get_db)):

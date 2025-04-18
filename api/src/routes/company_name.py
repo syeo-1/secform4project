@@ -8,7 +8,7 @@ from sqlalchemy import select
 router = APIRouter()
 
 @router.get(
-        '/company_name/{company_name}',
+        '/api/company_name/{company_name}',
         summary='Get Transaction Related to a Specific Company Name'
     )
 def get_company_name_data(company_name: str, db: Session = Depends(get_db)):
