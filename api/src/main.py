@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # from config import *
 
 # Initialize FastAPI
-app = FastAPI()
+app = FastAPI(redirect_slashes=True)
 
 origins = [
     'http://localhost:5173'

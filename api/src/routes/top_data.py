@@ -27,30 +27,8 @@ order by total_filing_transaction_value DESC
 limit 10;
 
 '''
-
 @router.get(
-        '/api/common/{data}',
-        summary='Get Transaction Related to a Specific Company Name'
-    )
-def get_company_name_data(data: str, db: Session = Depends(get_db)):
-    '''get transactions related to piece of common data'''
-
-    # check if data is in any one of the given columns
-    query_statement = select(Form_4_data).where(
-            or_(
-                Form_4_data.issuer_name == data,
-                Form_4_data.reporting_owner_name == data,
-                Form_4_data.ticker_symbol == data
-            )
-        )
-    result = db.execute(query_statement)
-    data = result.scalars().all()
-
-    return data
-
-
-@router.get(
-        '/api/common/top_sale_filings/',
+        '/api/common/top_sale_filings',
         summary='get top 10 data by sale price (no time interval as of yet)'
     )
 def get_top_ten_sale_filings(db: Session = Depends(get_db)):
@@ -87,6 +65,32 @@ def get_top_ten_sale_filings(db: Session = Depends(get_db)):
         "original_form_4_text_url"
     ]
     data = [dict(zip(column_names, row)) for row in result]
-    
 
     return data
+
+@router.get(
+        '/api/common/{data}',
+        summary='Get Transaction Related to a Specific Company Name'
+    )
+def get_company_name_data(data: str, db: Session = Depends(get_db)):
+    '''get transactions related to piece of common data'''
+
+    # check if data is in any one of the given columns
+    query_statement = select(Form_4_data).where(
+            or_(
+                Form_4_data.issuer_name == data,
+                Form_4_data.reporting_owner_name == data,
+                Form_4_data.ticker_symbol == data
+            )
+        )
+    result = db.execute(query_statement)
+    data = result.scalars().all()
+
+    return data
+
+
+
+@router.get("/test")
+def test_route():
+    print("Test route hit!")
+    return {"message": "working"}
