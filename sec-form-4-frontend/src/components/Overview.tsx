@@ -40,77 +40,19 @@ async function retrieve_data() {
 export default function Overview() {
 
     // get the 10 largest purchases
-    // retrieve_data()
-    // .then((data) => {
-    //     console.log(`data is actually ${JSON.stringify(data, null, 2)}`)
-    // })
-
     const [top_sale_data, set_top_sale_data] = useState<Transaction[]>([])
     const [top_purchase_data, set_top_purchase_data] = useState<Transaction[]>([])
 
-    const data = retrieve_data()
-        // .then((result) => {
-
-        //     let top_results = new Array<Transaction>();
-
-        //     result?.forEach((item) => {
-        //         console.log(`blah blah ${JSON.stringify(item)}`)
-        //         top_results.push(item)
-        //     })
-
-        //     return top_results;
-        // })
-    // console.log(`data value is ${JSON.stringify(data, null, 2)}`)
-    // set_top_sale_data(data)
     useEffect(() => {
         const fetchData = async () => {
             const result = await retrieve_data();
             if (result) {
-                set_top_sale_data(result); // ✅ correct type: Transaction[]
+                set_top_sale_data(result)
             }
         };
 
         fetchData();
     }, []);
-
-    // console.log(top_sale_data)
-    // console.log(`this is the data ${JSON.stringify(data)}`)
-    // console.log(`data is actually ${JSON.stringify(stuff, null, 2)}`)
-    // const data_get = purchase_data.json()
-    // console.log(`purchase data value is: ${purchase_data}`)
-
-    // get the 10 largest sells
-    // const sale_data = retrieve_data()
-
-    // just create a list of names you think are interesting (hardcoded for now) in frontend!
-    // const notable_names = [
-    //     "Musk Elon",
-    //     "BUFFETT Warren E",
-    //     "BEZOS JEFFREY P",
-    //     "FROST PHILLIP MD",
-    //     "Zuckerberg Mark",
-    //     "BAKER BROS. ADVISORS LP",
-    //     "GATES WILLIAM H III",
-    //     "Perceptive Advisors LLC",
-    //     "CARL C. ICAHN",
-    //     "TANG CAPITAL MANAGEMENT LLC"
-    // ]
-
-    // some random names available in the database for seeing if things work!
-    // const notable_names = [
-    //     "Aebersold Sarah",
-    //     "Agah Ramtin",
-    //     "AGRAWAL HEENA",
-    //     "Ahuja Amrita",
-    //     "Akinsanya Karen",
-    //     "Allen Charles W",
-    //     "Allison Eric",
-    //     "Altman Peter",
-    //     "AMIN TARANG",
-    //     "Anderson Joshua Joseph"
-    // ]
-
-    // console.log(notable_names)
 
     return (
         <>
