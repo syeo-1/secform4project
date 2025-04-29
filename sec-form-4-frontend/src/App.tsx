@@ -28,17 +28,17 @@ function App() {
   //   .then(data => console.log(data))
   //   .catch(error => console.log(error))
 
-  const get_ticker_info  = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}ticker/${ticker}`)
-      const data = await response.json()
-      console.log(data)
-    } catch(error) {
-      console.log(error)
-    }
-  }
+  // const get_ticker_info  = async () => {
+  //   try {
+  //     const response = await fetch(`${BASE_URL}ticker/${ticker}`)
+  //     const data = await response.json()
+  //     console.log(data)
+  //   } catch(error) {
+  //     console.log(error)
+  //   }
+  // }
 
-  get_ticker_info()
+  // get_ticker_info()
 
   
   // console.log(fetch(`${BASE_URL}ticker/${ticker}`))
