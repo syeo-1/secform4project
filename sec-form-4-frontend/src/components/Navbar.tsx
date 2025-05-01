@@ -9,6 +9,8 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
+const BASE_URL = 'http://127.0.0.1:8000/api/'
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -52,6 +54,31 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+
+  const onChange = (event: any) => {
+    // console.log(event.target.value)
+    const search_input_string: string = event.target.value
+    console.log(search_input_string)
+
+    // do a fetch to get data from api regarding search values
+    try {
+      const response = fetch(`${BASE_URL}common/search/${search_input_string}`)
+        .then((response) => response.json())
+        .then((json) => {
+          const search_results = json
+          console.log(search_results)
+      })
+      // console.log(response)
+      // if (!response.ok) {
+      //   throw new Error(`Response status: ${response.status}`);
+      // }
+      // const data = response.json()
+    } catch(error) {
+      console.log("testing")
+    }
+
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -80,6 +107,7 @@ export default function SearchAppBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={onChange}
             />
           </Search>
         </Toolbar>

@@ -58,13 +58,13 @@ export default function Overview() {
         <>
             <Grid container>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo data_list={top_sale_data}/>
+                    <OverviewCardInfo data_list={top_sale_data} title="Top Sale Data"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4}}>
-                    <OverviewCardInfo data_list={top_sale_data}/>
+                    <OverviewCardInfo data_list={top_sale_data} title="Top Purchase Data"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo data_list={top_sale_data}/>
+                    <OverviewCardInfo data_list={top_sale_data} title="Notable Names"/>
                 </Grid>
             </Grid>
         </>
