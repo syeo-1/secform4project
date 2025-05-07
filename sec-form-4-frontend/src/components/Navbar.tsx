@@ -8,6 +8,11 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { useEffect, useState } from "react"
+import SearchResults from './SearchResults';
+import TextField from '@mui/material/TextField';
+import { Autocomplete } from '@mui/material';
+
 
 const BASE_URL = 'http://127.0.0.1:8000/api/'
 
@@ -55,29 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
 
-  const onChange = (event: any) => {
-    // console.log(event.target.value)
-    const search_input_string: string = event.target.value
-    console.log(search_input_string)
-
-    // do a fetch to get data from api regarding search values
-    try {
-      const response = fetch(`${BASE_URL}common/search/${search_input_string}`)
-        .then((response) => response.json())
-        .then((json) => {
-          const search_results = json
-          console.log(search_results)
-      })
-      // console.log(response)
-      // if (!response.ok) {
-      //   throw new Error(`Response status: ${response.status}`);
-      // }
-      // const data = response.json()
-    } catch(error) {
-      console.log("testing")
-    }
-
-  }
+  const [search_results_api, set_search_results_api] = useState<string[]>([])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -100,16 +83,16 @@ export default function SearchAppBar() {
           >
             Insiderin.site
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={onChange}
+          <Autocomplete
+            options={search_results_api}
+            onInputChange={(_, newInputValue) => {
+              fetch(`${BASE_URL}common/search/${newInputValue}`)
+                .then((response) => response.json())
+                .then((json) => { set_search_results_api(json)})
+            }}
+            sx={{ width: 300}}
+            renderInput={(params: any) => <TextField {...params} label="Search" />}
             />
-          </Search>
         </Toolbar>
       </AppBar>
     </Box>
