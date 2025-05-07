@@ -23,13 +23,13 @@ def get_search_data(query_string: str, db: Session = Depends(get_db)):
     unique_issuer_name_query = select(distinct(Form_4_data.issuer_name)).where(Form_4_data.issuer_name.ilike(f'%{query_string}%'))
     unique_ticker_symbol_query = select(distinct(Form_4_data.ticker_symbol)).where(Form_4_data.ticker_symbol.ilike(f'%{query_string}%'))
 
-    result = []
+    result = set()
 
-    result.extend(db.execute(unique_reporting_owner_query).scalars().all())
-    result.extend(db.execute(unique_issuer_name_query).scalars().all())
-    result.extend(db.execute(unique_ticker_symbol_query).scalars().all())
+    result.update(db.execute(unique_reporting_owner_query).scalars().all())
+    result.update(db.execute(unique_issuer_name_query).scalars().all())
+    result.update(db.execute(unique_ticker_symbol_query).scalars().all())
 
-    return result
+    return list(result)
 
 @router.get(
         '/api/common/transaction/{data}',
