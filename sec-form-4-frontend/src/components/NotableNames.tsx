@@ -2,7 +2,6 @@
 
 // import { useEffect, useState } from "react";
 import { Transaction } from './types';
-import BasicMenu from './BasicMenu';
 
 // interface OverviewPropData {
 //     // fetch_data: () => Promise<(string | any[])[]>;
@@ -10,15 +9,13 @@ import BasicMenu from './BasicMenu';
 //     data_list: Transaction[] | string[]
 // }
 
-export default function OverviewCardInfo({data_list, title}: { data_list: Transaction[], title: string}) {
+export default function NotableNames({data_list, title}: { data_list: Transaction[], title: string}) {
 
     const data_list_li = data_list.map((data_item: Transaction, index: number) => <li key={index}>{data_item.reporting_owner_name}</li>);
 
     return (
         <>
             <h2>{title}</h2>
-            <BasicMenu options={['24 HRS','Week', 'Month', 'Year']} initial_title='24 HRS' />
-            <BasicMenu options={['Person', 'Company']} initial_title='Person' />
             <ol>
                 {data_list_li}
             </ol>

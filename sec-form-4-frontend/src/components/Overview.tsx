@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import OverviewCardInfo from './OverviewCardnfo';
+import BasicMenu from './BasicMenu';
+import NotableNames from './NotableNames';
 import { useEffect, useState } from 'react'
 import { Transaction } from './types';
 
@@ -43,6 +45,7 @@ export default function Overview() {
     const [top_sale_data, set_top_sale_data] = useState<Transaction[]>([])
     const [top_purchase_data, set_top_purchase_data] = useState<Transaction[]>([])
 
+
     useEffect(() => {
         const fetchData = async () => {
             const result = await retrieve_data();
@@ -64,7 +67,7 @@ export default function Overview() {
                     <OverviewCardInfo data_list={top_sale_data} title="Top Purchase Data"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo data_list={top_sale_data} title="Notable Names"/>
+                    <NotableNames data_list={top_sale_data} title='Notable Names'/>
                 </Grid>
             </Grid>
         </>
