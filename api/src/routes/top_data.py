@@ -4,6 +4,8 @@ from ..models import Form_4_data
 from sqlalchemy.orm import Session
 from ..database import get_db
 from sqlalchemy import select, or_, func, distinct
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 router = APIRouter()
 
@@ -28,11 +30,31 @@ limit 10;
 
 '''
 @router.get(
-        '/api/common/top_sale_filings',
+        '/api/common/top_filings',
         summary='get top 10 data by sale price (no time interval as of yet)'
     )
-def get_top_ten_sale_filings(db: Session = Depends(get_db)):
+def get_top_ten_sale_filings(time_interval, transaction_type, db: Session = Depends(get_db)):
     '''get top 10 sale filing data'''
+
+    oldest_allowable_data_iso = None
+
+    eastern = ZoneInfo("America/New_York")
+    now_et = datetime.now(eastern)
+
+
+    match time_interval:
+        case 'Day':
+            oldest_allowable_data = now_et - timedelta(days=1)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+        case 'Week':
+            oldest_allowable_data = now_et - timedelta(days=7)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+        case 'Month':
+            oldest_allowable_data = now_et - timedelta(days=30)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+        case 'Year':
+            oldest_allowable_data = now_et - timedelta(days=365)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
 
     query = select(
         Form_4_data.reporting_owner_name,
@@ -42,8 +64,10 @@ def get_top_ten_sale_filings(db: Session = Depends(get_db)):
         func.sum(Form_4_data.num_transaction_shares * Form_4_data.transaction_share_price).label("total_filing_transaction_value"),
         Form_4_data.original_form_4_text_url
     ).where(
-        Form_4_data.transaction_code == 'S',
-        Form_4_data.transaction_share_price.isnot(None)
+        # Form_4_data.transaction_code == 'S',
+        Form_4_data.transaction_code == transaction_type,
+        Form_4_data.transaction_share_price.isnot(None),
+        Form_4_data.acceptance_time >= oldest_allowable_data_iso
     ).group_by(
         Form_4_data.reporting_owner_name,
         Form_4_data.issuer_name,
