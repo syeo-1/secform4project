@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import OverviewCardInfo from './OverviewCardnfo';
-import BasicMenu from './BasicMenu';
 import NotableNames from './NotableNames';
 import { useEffect, useState } from 'react'
 import { Transaction } from './types';
@@ -67,7 +66,12 @@ export default function Overview() {
                     <OverviewCardInfo data_list={top_sale_data} title="Top Purchase Data"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <NotableNames data_list={top_sale_data} title='Notable Names'/>
+                    <NotableNames data_list={[
+                        'Elon Musk',
+                        'William H Gates',
+                        'Warren G Buffet',
+                        'Reed Hastings'
+                    ]} title='Notable Names'/>
                 </Grid>
             </Grid>
         </>
