@@ -26,7 +26,7 @@ async function retrieve_data() {
     // TODO: modify this function to get the proper data using function parameters
     // const ticker = "DUOL"
     try {
-      const response = await fetch(`${BASE_URL}common/top_sale_filings`)
+      const response = await fetch(`${BASE_URL}common/top_filings/?time_interval=Month&transaction_type=S`)
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -60,10 +60,10 @@ export default function Overview() {
         <>
             <Grid container>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo data_list={top_sale_data} title="Top Sale Data"/>
+                    <OverviewCardInfo data_list={top_sale_data} update_data={set_top_sale_data} title="Top Sale Data"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4}}>
-                    <OverviewCardInfo data_list={top_sale_data} title="Top Purchase Data"/>
+                    <OverviewCardInfo data_list={top_sale_data} update_data={set_top_purchase_data} title="Top Purchase Data"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
                     <NotableNames data_list={[
