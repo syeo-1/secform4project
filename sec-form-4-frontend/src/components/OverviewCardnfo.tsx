@@ -39,15 +39,10 @@ export default function OverviewCardInfo({title, transaction_type}: { title: str
     const [person_or_company, set_person_or_company] = useState("Person")
     
     const handle_time_interval = (interval: string) => {
-        console.log("TIME")
-        // console.log(interval)
         set_time_interval(interval)
-        console.log(time_interval)
     }
 
     const handle_person_or_company = (value: string) => {
-        console.log("PERSON")
-        console.log(value)
         set_person_or_company(value)
     }
 

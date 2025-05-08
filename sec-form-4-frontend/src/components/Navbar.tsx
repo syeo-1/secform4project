@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 import SearchResults from './SearchResults';
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
-
+import { useNavigate } from 'react-router';
 
 const BASE_URL = 'http://127.0.0.1:8000/api/'
 
@@ -61,6 +61,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchAppBar() {
 
   const [search_results_api, set_search_results_api] = useState<string[]>([])
+  const [highlightedOption, setHighlightedOption] = useState<string | null>("");
+  const [inputValue, setInputValue] = useState("")
+  const navigate = useNavigate()
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault() // prevent a form submission
+      if (highlightedOption) {
+        navigate(`/info/${encodeURIComponent(highlightedOption)}`);
+      }
+    }
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -81,17 +93,23 @@ export default function SearchAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Insiderin.site
+            InsiderInsight
           </Typography>
           <Autocomplete
             options={search_results_api}
+            getOptionLabel={(option) => option}
             onInputChange={(_, newInputValue) => {
               fetch(`${BASE_URL}common/search/${newInputValue}`)
                 .then((response) => response.json())
                 .then((json) => { set_search_results_api(json)})
+              setInputValue(newInputValue)
+            }}
+            onHighlightChange={(event, option) => {
+              setHighlightedOption(option);
             }}
             sx={{ width: 300}}
             renderInput={(params: any) => <TextField {...params} label="Search" />}
+            onKeyDown={handleKeyDown}
             />
         </Toolbar>
       </AppBar>
