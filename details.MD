@@ -97,3 +97,35 @@ but sometimes can be something like this: 2025-03-26-05:00, which isn't valid in
 
 - also an example of creating exceptions in Python: https://github.com/polarsource/polar/blob/main/server/polar/exceptions.py
     - and how to use them: https://github.com/polarsource/polar/blob/main/server/polar/storefront/endpoints.py
+
+
+# basic front end work!
+
+### what information do I have, and what would I like to be displayed
+
+#### transaction information
+- maybe it would be interesting to see an individual's known holdings
+    - ie. what stocks do we know they're currently holding onto?
+- also, would like to know, what are their overall profit/loss based on 
+
+
+### to refer to for inspo
+- https://www.gurufocus.com/insider/summary
+
+### creating the front end
+- I'm gonna try and use Vite for front end development
+    - using typescript and bootstrap? or tailwind we'll see... keep things simple tho
+
+### data retrieval set up
+- realistically, I should just use AWS lambda and cloudwatch instead of an EC2 instance. Much cheaper, but
+would not be using airflow. I'll just say I migrated away for cost saving by like 95%. which is true, since t2small will likely cost like 15 dollars a month, and lambda with cloudwatch may cost like less than a dollar i hope
+
+
+### TODO: retrieving historical/missing data
+- I can actually retrieve all form 4 information!!!
+    - would have to scrape using this link and adjust start/end dates, form value, and increment page number
+        - https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2025-03-10&enddt=2025-04-09&forms=4&page=100
+    - looks like I can only reliably get data one week at a time. No matter what the custom range you give, it seems that you can only retrieve up to 10_000 elements. So if there's more than that, then 
+
+### useeffect
+- use useEffect to run re-renders on the UI. Within it, there's a dependency array. Whenever variables are modified/changed for those dependencies, a re-render is triggered. You can also just leave it empty if you don't plan on running any re-renders when certain variables are changing
