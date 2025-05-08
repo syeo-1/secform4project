@@ -10,13 +10,14 @@ import { useEffect, useState } from 'react'
 //     // data_list: (string | any[])[] | Promise<(string | any[])[]>;
 //     data_list: Transaction[] | string[]
 // }
-const BASE_URL = 'http://127.0.0.1:8000/api/'
+const BASE_API_URL = 'http://127.0.0.1:8000/api/'
+const BASE_FRONTEND_URL = 'http://localhost:5173/'
 
 async function retrieve_data(time_interval: string, transaction_type: string) {
     // TODO: modify this function to get the proper data using function parameters
     // const ticker = "DUOL"
     try {
-      const response = await fetch(`${BASE_URL}common/top_filings/?time_interval=${time_interval}&transaction_type=${transaction_type}`)
+      const response = await fetch(`${BASE_API_URL}common/top_filings/?time_interval=${time_interval}&transaction_type=${transaction_type}`)
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -61,7 +62,7 @@ export default function OverviewCardInfo({title, transaction_type}: { title: str
         fetchData();
     }, [time_interval]);
 
-    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li key={index}>{data_item.reporting_owner_name}</li>);
+    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li key={index}><><a href={`${BASE_FRONTEND_URL}info/${data_item.reporting_owner_name.replace(/ /g, "%20")}`}>{data_item.reporting_owner_name}</a></></li>);
 
     return (
         <>

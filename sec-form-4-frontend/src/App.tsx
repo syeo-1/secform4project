@@ -49,9 +49,10 @@ function App() {
         <Route path='/' element={<Home />}>
         </Route>
         <Route path='/info' element={<Info />}>
-          <Route path='company_name/:company_name' element={<Info />}/>
+          <Route path=':data' element={<Info />}/>
+          {/* <Route path='company_name/:company_name' element={<Info />}/>
           <Route path='ticker/:ticker' element={<Info />}/>
-          <Route path='reporting_owner/:reporting_owner' element={<Info />}/>
+          <Route path='reporting_owner/:reporting_owner' element={<Info />}/> */}
         </Route>
       </Routes>
     </Router>
