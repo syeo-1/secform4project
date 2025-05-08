@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { Transaction } from './types';
 
 
-
-export default function BasicMenu({options, update_data, initial_title}: {options: string[], update_data: React.Dispatch<React.SetStateAction<Transaction[]>>, initial_title: string}) {
+// TODO: change on_menu_change type to the proper function!!!
+export default function BasicMenu({options, initial_title, on_menu_change}: {options: string[], initial_title: string, on_menu_change: any}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [menuText, setMenuText] = React.useState(initial_title)
   const open = Boolean(anchorEl);
@@ -16,6 +16,7 @@ export default function BasicMenu({options, update_data, initial_title}: {option
   const handleClose = (value: string) => {
     if (typeof value === 'string') {
         setMenuText(value)
+        on_menu_change(value)
     }
     // if (value) {
     //     setMenuText(value)

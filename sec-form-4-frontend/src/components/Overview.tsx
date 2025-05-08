@@ -8,62 +8,19 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import OverviewCardInfo from './OverviewCardnfo';
 import NotableNames from './NotableNames';
-import { useEffect, useState } from 'react'
 import { Transaction } from './types';
 
-const BASE_URL = 'http://127.0.0.1:8000/api/'
-
-// interface Transaction {
-//     reporting_owner_name: string;
-//     issuer_name: string;
-//     ticker_symbol: string;
-//     acceptance_time: string;
-//     total_filing_transaction_value: number;
-//     original_form_4_text_url: string;
-// }
-
-async function retrieve_data() {
-    // TODO: modify this function to get the proper data using function parameters
-    // const ticker = "DUOL"
-    try {
-      const response = await fetch(`${BASE_URL}common/top_filings/?time_interval=Month&transaction_type=S`)
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-      const data = await response.json()
-    //   console.log(`the value of the data is ${data}`)
-      return data as Transaction[]
-    } catch(error) {
-      console.log("testing")
-    }
-}
 
 export default function Overview() {
-
-    // get the 10 largest purchases
-    const [top_sale_data, set_top_sale_data] = useState<Transaction[]>([])
-    const [top_purchase_data, set_top_purchase_data] = useState<Transaction[]>([])
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await retrieve_data();
-            if (result) {
-                set_top_sale_data(result)
-            }
-        };
-
-        fetchData();
-    }, []);
 
     return (
         <>
             <Grid container>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo data_list={top_sale_data} update_data={set_top_sale_data} title="Top Sale Data"/>
+                    <OverviewCardInfo title="Top Sale Data" transaction_type="S"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4}}>
-                    <OverviewCardInfo data_list={top_sale_data} update_data={set_top_purchase_data} title="Top Purchase Data"/>
+                    <OverviewCardInfo title="Top Purchase Data" transaction_type="P"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
                     <NotableNames data_list={[
