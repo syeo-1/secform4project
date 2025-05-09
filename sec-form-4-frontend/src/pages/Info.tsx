@@ -25,17 +25,16 @@ export default function Info() {
 
   const { data } = useParams()
   // let transaction_data_rows: Transaction[] | undefined
-  const [transaction_data_rows, set_transaction_data_rows] = useState<Transaction[] | undefined>([])
+  const [transaction_data_rows, set_transaction_data_rows] = useState<Transaction[]>([])
 
   useEffect(() => {
     console.log(`data value is: ${data}`)
     const fetchData = async () => {
         const transaction_data_rows_api = await get_transaction_row_data(data);
-        set_transaction_data_rows(transaction_data_rows_api)
-        // if (result) {
-        //     set_top_transaction_data(result)
-        // }
-        console.log(transaction_data_rows)
+        if (transaction_data_rows_api) {
+          set_transaction_data_rows(transaction_data_rows_api)
+        }
+        // console.log(transaction_data_rows)
     };
 
     fetchData();

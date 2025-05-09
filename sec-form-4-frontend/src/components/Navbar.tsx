@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from "react"
-import SearchResults from './SearchResults';
+// import SearchResults from './SearchResults';
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router';
