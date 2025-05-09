@@ -40,9 +40,12 @@ export default function OverviewCardInfo({title, transaction_type}: { title: str
     
     const handle_time_interval = (interval: string) => {
         set_time_interval(interval)
+        // console.log(time_interval)
     }
 
     const handle_person_or_company = (value: string) => {
+        // console.log("PERSON")
+        // console.log(value)
         set_person_or_company(value)
     }
 
