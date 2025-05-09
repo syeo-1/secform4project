@@ -31,11 +31,12 @@ export default function DenseTable() {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Transaction Type</TableCell>
+            <TableCell>Acceptance Time</TableCell>
+            <TableCell align="right">Company Name</TableCell>
+            <TableCell align="right">Symbol</TableCell>
+            <TableCell align="right">Reporting Owner</TableCell>
+            <TableCell align="right">Shares Traded</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
