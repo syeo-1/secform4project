@@ -28,7 +28,7 @@ export default function Info() {
   const [transaction_data_rows, set_transaction_data_rows] = useState<Transaction[]>([])
 
   useEffect(() => {
-    console.log(`data value is: ${data}`)
+    // console.log(`data value is: ${data}`)
     const fetchData = async () => {
         const transaction_data_rows_api = await get_transaction_row_data(data);
         if (transaction_data_rows_api) {
@@ -40,10 +40,12 @@ export default function Info() {
     fetchData();
   }, [data])
 
+  // console.log(transaction_data_rows)
+
     return (
     <>
       <Navbar />
-      <BarChart />
+      <BarChart transaction_data={transaction_data_rows}/>
       <TransactionTable transaction_data={transaction_data_rows}/>
     </>
     )

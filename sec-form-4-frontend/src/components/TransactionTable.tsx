@@ -16,6 +16,7 @@ function createData(transaction_element: Transaction) {
   const reporting_owner_name = transaction_element.reporting_owner_name
   const num_transaction_shares = transaction_element.num_transaction_shares
   const transaction_share_price = transaction_element.transaction_share_price
+  const form_4_id = transaction_element.form_4_id
   return {
     transaction_code,
     acceptance_time,
@@ -23,7 +24,8 @@ function createData(transaction_element: Transaction) {
     ticker_symbol,
     reporting_owner_name,
     num_transaction_shares,
-    transaction_share_price
+    transaction_share_price,
+    form_4_id
   }
 }
 
@@ -65,8 +67,9 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
           </TableRow>
         </TableHead>
         <TableBody>
-          {formatted_transaction_data.map((row: any) => (
-            <TableRow
+          {formatted_transaction_data.map((row: any) => {
+            // console.log("form 4 id: ", row.form_4_id)
+            return (<TableRow
               key={row.form_4_id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
@@ -80,7 +83,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
               <TableCell align="right">{row.num_transaction_shares}</TableCell>
               <TableCell align="right">{`$${row.transaction_share_price}`}</TableCell>
             </TableRow>
-          ))}
+            )})}
         </TableBody>
       </Table>
     </TableContainer>
