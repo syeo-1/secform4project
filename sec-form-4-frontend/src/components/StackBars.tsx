@@ -2,13 +2,13 @@ import * as React from 'react';
 import { BarChart, BarChartProps } from '@mui/x-charts/BarChart';
 import { addLabels, balanceSheet } from './AddLabelStack';
 
-export default function StackBars() {
+export default function StackBars({filing_data}: {filing_data: Map<any, any>}) {
   return (
     <BarChart
       dataset={balanceSheet}
       series={addLabels([
-        { dataKey: 'total_purchase_value', stack: 'net_transaction_value', color: 'green' },
-        { dataKey: 'total_sale_value', stack: 'net_transaction_value', color: 'red'},
+        { dataKey: 'total_purchase_value', stack: 'net_transaction_value', color: '#089981' },
+        { dataKey: 'total_sale_value', stack: 'net_transaction_value', color: '#f23645'},
       ])}
       xAxis={[{
         scaleType: 'band',
