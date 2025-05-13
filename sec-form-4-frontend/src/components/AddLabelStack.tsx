@@ -22,8 +22,7 @@ export function addLabels<T extends { dataKey: keyof typeof translations }>(seri
   return series.map((item) => ({
     ...item,
     label: translations[item.dataKey],
-    valueFormatter: (v: number | null) => (v != null ? `$ ${v}k` : '-'),
-    // valueFormatter: (v: number | null) => (v ? v: '-'),
+    valueFormatter: (v: number | null) => (v ? `$ ${v.toLocaleString()}` : '-'),
   }));
 }
 

@@ -7,12 +7,13 @@ export default function StackBars() {
     <BarChart
       dataset={balanceSheet}
       series={addLabels([
-        { dataKey: 'total_purchase_value', stack: 'net_transaction_value' },
-        { dataKey: 'total_sale_value', stack: 'net_transaction_value' },
+        { dataKey: 'total_purchase_value', stack: 'net_transaction_value', color: 'green' },
+        { dataKey: 'total_sale_value', stack: 'net_transaction_value', color: 'red'},
       ])}
       xAxis={[{
         scaleType: 'band',
         dataKey: 'datetime'
+
      }]}
     //   yAxis={[{ width: 80 }]}
     slotProps={{
