@@ -6,17 +6,25 @@ import MenuItem from '@mui/material/MenuItem';
 import { Box } from '@mui/material';
 import { Transaction } from './types';
 import StackBars from './StackBars'
+import { useState } from 'react';
 // import { Box } from '@mui/material';
 
 const series = [{ data: [-2, -9, 12, 11, 6, -4] }];
 
+// function set_timeframe_and_filing_data(event_data, transaction_data, timeframe, set_timeframe, set_filing_data) {
+
+// }
+
 export default function ColorScale({transaction_data}: {transaction_data: Transaction[]}) {
-  const [colorX] = React.useState<
-    'None' | 'piecewise' | 'continuous' | 'ordinal'
-  >('piecewise');
-  const [colorY, setColorY] = React.useState<'None' | 'piecewise' | 'continuous'>(
-    'None',
-  );
+//   const [colorX] = React.useState<
+//     'None' | 'piecewise' | 'continuous' | 'ordinal'
+//   >('piecewise');
+//   const [colorY, setColorY] = React.useState<'None' | 'piecewise' | 'continuous'>(
+//     'None',
+//   );
+  const [timeframe, set_timeframe] = useState("week")
+  // const [filing_data, set_filing_data] = useState(new Map())
+    
 
   const filing_data = new Map()
 
@@ -72,17 +80,25 @@ export default function ColorScale({transaction_data}: {transaction_data: Transa
             select
             sx={{ minWidth: 150 }}
             label="Timeframe"
-            value={colorY}
+            value={timeframe}
             onChange={(event) =>
-                setColorY(event.target.value as 'None' | 'piecewise' | 'continuous')
+                // set_timeframe_and_filing_data(
+                //   event.target.value,
+                //   transaction_data,
+                //   timeframe,
+                //   set_timeframe,
+                //   set_filing_data
+                // )
+                // setColorY(event.target.value as 'None' | 'piecewise' | 'continuous')
+                set_timeframe(event.target.value as 'week' | 'month' | 'year')
             }
             >
-            <MenuItem value="None">Today</MenuItem>
-            <MenuItem value="piecewise">Week</MenuItem>
-            <MenuItem value="continuous">Month</MenuItem>
+            <MenuItem value="week">Week</MenuItem>
+            <MenuItem value="month">Month</MenuItem>
+            <MenuItem value="year">Year</MenuItem>
             </TextField>
         </Stack>
-            <StackBars filing_data={filing_data} timeframe={'week'}>
+            <StackBars filing_data={filing_data} timeframe={timeframe}>
 
             </StackBars>
         </Stack>

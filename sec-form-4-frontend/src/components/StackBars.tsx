@@ -28,6 +28,8 @@ function process_filing_data_for_barchart(filing_data: any, timeframe: string) {
     timeframe_strings = get_last_n_day_strings(7)
   } else if (timeframe === 'month') {
     timeframe_strings = get_last_n_day_strings(30)
+  } else if (timeframe === 'year') {
+    timeframe_strings = get_last_n_day_strings(365)
   }
 
   // TODO: should try and figure out how to improve performance here since O(N)^2
@@ -109,8 +111,7 @@ export default function StackBars({filing_data, timeframe}: {filing_data: Map<an
       ])}
       xAxis={[{
         scaleType: 'band',
-        dataKey: 'datetime'
-
+        dataKey: 'datetime',
      }]}
     //   yAxis={[{ width: 80 }]}
     slotProps={{
