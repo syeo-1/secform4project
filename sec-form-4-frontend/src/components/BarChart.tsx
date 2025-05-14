@@ -60,7 +60,7 @@ export default function ColorScale({transaction_data}: {transaction_data: Transa
   })
 
   // now, for each of the filing_data items, use its acceptance time and total_filing value
-  console.log(filing_data)
+//   console.log(filing_data)
 
 
 
@@ -82,7 +82,7 @@ export default function ColorScale({transaction_data}: {transaction_data: Transa
             <MenuItem value="continuous">Month</MenuItem>
             </TextField>
         </Stack>
-            <StackBars>
+            <StackBars filing_data={filing_data} timeframe={'week'}>
 
             </StackBars>
         </Stack>
