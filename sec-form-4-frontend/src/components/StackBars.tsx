@@ -24,10 +24,11 @@ function process_filing_data_for_barchart(filing_data: any, timeframe: string) {
   let timeframe_strings: string[] 
   const processed_filing_data = new Map()
 
-  // if (timeframe === 'week') {
-  //   timeframe_strings = get_last_n_day_strings(7)
-  // }
-  timeframe_strings = get_last_n_day_strings(60)
+  if (timeframe === 'week') {
+    timeframe_strings = get_last_n_day_strings(7)
+  } else if (timeframe === 'month') {
+    timeframe_strings = get_last_n_day_strings(30)
+  }
 
   // TODO: should try and figure out how to improve performance here since O(N)^2
   // maybe could just iterate through the map and do a date check instead of going through each day?
