@@ -90,7 +90,7 @@ function process_filing_data_for_barchart(filing_data: any, timeframe: string) {
       })
   )
 
-  console.log(processed_and_formatted_filing_data)
+  // console.log(processed_and_formatted_filing_data)
 
   return processed_and_formatted_filing_data
 

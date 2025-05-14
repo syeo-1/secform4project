@@ -26,6 +26,7 @@ export default function Info() {
   const { data } = useParams()
   // let transaction_data_rows: Transaction[] | undefined
   const [transaction_data_rows, set_transaction_data_rows] = useState<Transaction[]>([])
+  const [transaction_data_copy, set_transaction_data_copy] = useState<Transaction[]>([])
 
   useEffect(() => {
     // console.log(`data value is: ${data}`)
@@ -33,6 +34,7 @@ export default function Info() {
         const transaction_data_rows_api = await get_transaction_row_data(data);
         if (transaction_data_rows_api) {
           set_transaction_data_rows(transaction_data_rows_api)
+          set_transaction_data_copy(transaction_data_rows_api)
         }
         // console.log(transaction_data_rows)
     };
@@ -40,12 +42,12 @@ export default function Info() {
     fetchData();
   }, [data])
 
-  // console.log(transaction_data_rows)
+  // console.log(transaction_data_copy)
 
     return (
     <>
       <Navbar />
-      <BarChart transaction_data={transaction_data_rows}/>
+      <BarChart transaction_data={transaction_data_rows} set_transactions={set_transaction_data_rows} transaction_data_copy={transaction_data_copy}/>
       <TransactionTable transaction_data={transaction_data_rows}/>
     </>
     )
