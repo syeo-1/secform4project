@@ -105,7 +105,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
               key={row.form_4_id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" sx={{color: row.transaction_code === 'S' ? 'red' : 'green'}}>
                 {format_transaction_code(row.transaction_code)}
               </TableCell>
               <TableCell align="right">{format_acceptance_time(row.acceptance_time)}</TableCell>
