@@ -129,3 +129,13 @@ would not be using airflow. I'll just say I migrated away for cost saving by lik
 
 ### useeffect
 - use useEffect to run re-renders on the UI. Within it, there's a dependency array. Whenever variables are modified/changed for those dependencies, a re-render is triggered. You can also just leave it empty if you don't plan on running any re-renders when certain variables are changing
+
+### slow search results TODO:
+- this might be something to keep in mind if the site goes live: https://mui.com/material-ui/react-autocomplete/#search-as-you-type
+- if I'm doing requests per keystroke on the search bar, then need to throttle requests somehow
+
+### nice future features
+- use react-plotly-js for the bar chart instead, so users can have pan and zoom for the charts (only material ui pro has that feature)
+- top activity for homepage (ie. most transactions in a given timeframe)
+
+### trying to copy the bloomberg terminal color scheme and styles
