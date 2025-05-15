@@ -8,6 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Transaction } from './types';
 
+function format_transaction_code(transaction_code: string) {
+  // takes the P or S transaction code and returns the proper word for it
+
+  if (transaction_code === 'P') {
+    return 'Purchase'
+  } else {
+    return 'Sale'
+  }
+}
+
 function createData(transaction_element: Transaction) {
   const transaction_code = transaction_element.transaction_code
   const acceptance_time = transaction_element.acceptance_time
@@ -74,7 +84,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.transaction_code}
+                {format_transaction_code(row.transaction_code)}
               </TableCell>
               <TableCell align="right">{row.acceptance_time}</TableCell>
               <TableCell align="right">{row.issuer_name}</TableCell>
