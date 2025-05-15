@@ -15,7 +15,7 @@ async function get_transaction_row_data(search_query: string | undefined) {
       }
       const data = await response.json()
     //   console.log(`the value of the data is ${data}`)
-      return data as Transaction[]
+      return data.reverse() as Transaction[]
     } catch(error) {
       console.log("testing")
     }
