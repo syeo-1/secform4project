@@ -73,6 +73,11 @@ export default function SearchAppBar() {
       }
     }
   }
+  const handleLeftClick = () => {
+    if (highlightedOption) {
+      navigate(`/info/${encodeURIComponent(highlightedOption)}`);
+    }
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -104,12 +109,13 @@ export default function SearchAppBar() {
                 .then((json) => { set_search_results_api(json)})
               setInputValue(newInputValue)
             }}
-            onHighlightChange={(event, option) => {
+            onHighlightChange={(_, option) => {
               setHighlightedOption(option);
             }}
             sx={{ width: 300}}
             renderInput={(params: any) => <TextField {...params} label="Search" />}
             onKeyDown={handleKeyDown}
+            onChange={handleLeftClick}
             />
         </Toolbar>
       </AppBar>
