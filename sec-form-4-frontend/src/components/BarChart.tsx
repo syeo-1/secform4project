@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Box } from '@mui/material';
 import { Transaction } from './types';
 import StackBars from './StackBars'
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 // import { Box } from '@mui/material';
 
 const series = [{ data: [-2, -9, 12, 11, 6, -4] }];
@@ -30,7 +30,9 @@ function timeframe_filter_transaction_data(transaction_data: Transaction[], time
     oldest_allowable_date.setDate(now.getDate() - 7);
   } else if (timeframe === 'month') {
     oldest_allowable_date.setDate(now.getDate() - 30)
-  }else if (timeframe === 'year') {
+  } else if (timeframe === 'six-months') {
+    oldest_allowable_date.setDate(now.getDate() - 180)
+  } else if (timeframe === 'year') {
     oldest_allowable_date.setDate(now.getDate() - 365)
   }
 
@@ -51,9 +53,21 @@ function timeframe_filter_transaction_data(transaction_data: Transaction[], time
 
 export default function BarChart({transaction_data, set_transactions, transaction_data_copy}: {transaction_data: Transaction[], set_transactions: React.Dispatch<React.SetStateAction<Transaction[]>>, transaction_data_copy: Transaction[]}) {
   const [timeframe, set_timeframe] = useState("week")
+  const has_run = useRef(false)
 
   const filing_data = new Map()
+
   // const transaction_data_clone = structuredClone(transaction_data)
+
+  useEffect(() => {
+    if (!has_run.current && transaction_data_copy.length > 0) {
+      const filtered_transaction_data = timeframe_filter_transaction_data(transaction_data_copy, timeframe)
+      console.log(transaction_data_copy)
+      console.log(timeframe)
+      set_transactions(filtered_transaction_data)
+      has_run.current = true
+    }
+  }, [transaction_data_copy])
 
   // same filing can have both purchases and sells, so need to distinguish them somehow when displaying data on the graph
   transaction_data.forEach((transaction_element) => {
@@ -105,7 +119,7 @@ export default function BarChart({transaction_data, set_transactions, transactio
             label="Timeframe"
             value={timeframe}
             onChange={(event) => {
-              set_timeframe(event.target.value as 'week' | 'month' | 'year')
+              set_timeframe(event.target.value as 'week' | 'month' | 'six months' | 'year')
               // console.log(event.target.value)
               // console.log(transaction_data_copy)
               const filtered_transaction_data = timeframe_filter_transaction_data(transaction_data_copy, event.target.value)
@@ -114,6 +128,7 @@ export default function BarChart({transaction_data, set_transactions, transactio
             >
             <MenuItem value="week">Week</MenuItem>
             <MenuItem value="month">Month</MenuItem>
+            <MenuItem value="six-months">6 Months</MenuItem>
             <MenuItem value="year">Year</MenuItem>
             </TextField>
         </Stack>

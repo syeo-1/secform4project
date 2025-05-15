@@ -28,6 +28,8 @@ function process_filing_data_for_barchart(filing_data: any, timeframe: string) {
     timeframe_strings = get_last_n_day_strings(7)
   } else if (timeframe === 'month') {
     timeframe_strings = get_last_n_day_strings(30)
+  } else if (timeframe === 'six-months') {
+    timeframe_strings = get_last_n_day_strings(180)
   } else if (timeframe === 'year') {
     timeframe_strings = get_last_n_day_strings(365)
   }
