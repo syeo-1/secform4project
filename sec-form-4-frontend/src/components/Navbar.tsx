@@ -78,6 +78,10 @@ export default function SearchAppBar() {
       navigate(`/info/${encodeURIComponent(highlightedOption)}`);
     }
   }
+  
+  const goHome = () => {
+    navigate('/')
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -93,13 +97,16 @@ export default function SearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography
-            variant="h6"
+            // variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            InsiderInsight
+            sx={{ display: { xs: 'none', sm: 'block' },
+            paddingRight: '55vw'
+          }}
+          > 
+            <h2 onClick={goHome} style={{cursor: 'pointer'}}>InsiderInsight</h2>
           </Typography>
+
           <Autocomplete
             options={search_results_api}
             getOptionLabel={(option) => option}
