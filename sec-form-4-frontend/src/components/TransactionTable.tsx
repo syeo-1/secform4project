@@ -18,6 +18,28 @@ function format_transaction_code(transaction_code: string) {
   }
 }
 
+function format_acceptance_time(acceptance_time: string) {
+  // takes the acceptance time string and reformats to be
+  // of format date time (am/pm) instead of dateTtime
+
+  const date_and_time = acceptance_time.split("T")
+  const time_split = date_and_time[1].split(":")
+  let hour = parseInt(time_split[0])
+  let am_pm_str: string
+
+  if (hour >= 12) {
+    am_pm_str = "pm"
+    if (hour > 12) {
+      hour -= 12
+    }
+  } else {
+    am_pm_str = "am"
+  }
+
+  return date_and_time[0] + " " + hour.toString() + ":" + time_split.slice(1, 3).join(":") + " " + am_pm_str
+
+}
+
 function createData(transaction_element: Transaction) {
   const transaction_code = transaction_element.transaction_code
   const acceptance_time = transaction_element.acceptance_time
@@ -86,7 +108,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
               <TableCell component="th" scope="row">
                 {format_transaction_code(row.transaction_code)}
               </TableCell>
-              <TableCell align="right">{row.acceptance_time}</TableCell>
+              <TableCell align="right">{format_acceptance_time(row.acceptance_time)}</TableCell>
               <TableCell align="right">{row.issuer_name}</TableCell>
               <TableCell align="right">{row.ticker_symbol}</TableCell>
               <TableCell align="right">{row.reporting_owner_name}</TableCell>
