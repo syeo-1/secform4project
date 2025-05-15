@@ -60,13 +60,8 @@ export default function BarChart({transaction_data, set_transactions, transactio
   // const transaction_data_clone = structuredClone(transaction_data)
 
   useEffect(() => {
-    if (!has_run.current && transaction_data_copy.length > 0) {
-      const filtered_transaction_data = timeframe_filter_transaction_data(transaction_data_copy, timeframe)
-      console.log(transaction_data_copy)
-      console.log(timeframe)
-      set_transactions(filtered_transaction_data)
-      has_run.current = true
-    }
+    const filtered_transaction_data = timeframe_filter_transaction_data(transaction_data_copy, timeframe)
+    set_transactions(filtered_transaction_data)
   }, [transaction_data_copy])
 
   // same filing can have both purchases and sells, so need to distinguish them somehow when displaying data on the graph
