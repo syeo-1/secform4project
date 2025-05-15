@@ -52,7 +52,7 @@ function timeframe_filter_transaction_data(transaction_data: Transaction[], time
 }
 
 export default function BarChart({transaction_data, set_transactions, transaction_data_copy}: {transaction_data: Transaction[], set_transactions: React.Dispatch<React.SetStateAction<Transaction[]>>, transaction_data_copy: Transaction[]}) {
-  const [timeframe, set_timeframe] = useState("week")
+  const [timeframe, set_timeframe] = useState("month")
   const has_run = useRef(false)
 
   const filing_data = new Map()
@@ -111,7 +111,7 @@ export default function BarChart({transaction_data, set_transactions, transactio
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'inherit', justifyContent: 'center', width: '100%'}}>
-        <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: 600, margin: '0 auto', marginTop: 2}}>
+        <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: '95%', margin: '0 auto', marginTop: 2}}>
         <Stack direction="row" spacing={1}>
             <TextField
             select

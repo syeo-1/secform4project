@@ -114,20 +114,13 @@ export default function StackBars({filing_data, timeframe}: {filing_data: Map<an
       xAxis={[{
         scaleType: 'band',
         dataKey: 'datetime',
-     }]}
+    }]}
     //   yAxis={[{ width: 80 }]}
     slotProps={{
         legend: { hidden: true }
     }}
-    // margin={{left: 4000}}
-    // height={350}
-      {...config}
+    margin={{left: 100}}
+    height={350}
     />
   );
 }
-
-const config: Partial<BarChartProps> = {
-  height: 350,
-  margin: { left: 100 },
-//   hideLegend: true,
-};
