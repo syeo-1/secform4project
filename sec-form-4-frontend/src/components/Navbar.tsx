@@ -63,6 +63,7 @@ export default function SearchAppBar() {
   const [search_results_api, set_search_results_api] = useState<string[]>([])
   const [highlightedOption, setHighlightedOption] = useState<string | null>("");
   const [inputValue, setInputValue] = useState("")
+  const [search_label, set_search_label] = useState("Search")
   const navigate = useNavigate()
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -85,7 +86,7 @@ export default function SearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar sx={{backgroundColor: 'black'}} position="static">
         <Toolbar>
           <IconButton
             size="large"
@@ -101,7 +102,7 @@ export default function SearchAppBar() {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' },
-            paddingRight: '55vw'
+            paddingRight: '65vw'
           }}
           > 
             <h2 onClick={goHome} style={{cursor: 'pointer'}}>InsiderInsight</h2>
@@ -115,12 +116,20 @@ export default function SearchAppBar() {
                 .then((response) => response.json())
                 .then((json) => { set_search_results_api(json)})
               setInputValue(newInputValue)
+              // if (newInputValue.length > 0) {
+              //   set_search_label("")
+              // } else if (newInputValue.length == 0) {
+              //   set_search_label("Search")
+              // }
+            }}
+            onOpen={() => {
+              set_search_label("")
             }}
             onHighlightChange={(_, option) => {
               setHighlightedOption(option);
             }}
-            sx={{ width: 300}}
-            renderInput={(params: any) => <TextField {...params} label="Search" />}
+            sx={{ width: 300, backgroundColor: 'white', borderRadius: '10px', "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {borderColor: "black"}}}
+            renderInput={(params: any) => <TextField {...params} label="" placeholder="Search" />}
             onKeyDown={handleKeyDown}
             onChange={handleLeftClick}
             />
