@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BarChart, BarChartProps } from '@mui/x-charts/BarChart';
 import { addLabels, balanceSheet } from './AddLabelStack';
 
+
 function get_last_n_day_strings(n: number): string[] {
   const result: string[] = [];
   const today = new Date();
@@ -106,6 +107,14 @@ export default function StackBars({filing_data, timeframe}: {filing_data: Map<an
 
   return (
     <BarChart
+      sx={
+        {
+        '& .MuiChartsGrid-line': {
+          stroke: '#26252b',
+          strokeWidth: 1,
+        },
+      }
+      }
       dataset={processed_filing_data}
       series={addLabels([
         { dataKey: 'total_purchase_value', stack: 'net_transaction_value', color: '#089981' },
@@ -114,7 +123,17 @@ export default function StackBars({filing_data, timeframe}: {filing_data: Map<an
       xAxis={[{
         scaleType: 'band',
         dataKey: 'datetime',
+        tickLabelStyle: {fill: 'lightslategray'}
     }]}
+    yAxis={[
+      {
+        tickLabelStyle: {fill: 'lightslategray'}
+      }
+    ]}
+    grid={{
+      horizontal: true,
+      vertical: true
+    }}
     //   yAxis={[{ width: 80 }]}
     slotProps={{
         legend: { hidden: true }
