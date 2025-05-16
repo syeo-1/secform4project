@@ -117,26 +117,26 @@ export default function BarChart({transaction_data, set_transactions, transactio
             //   '& .MuiInputBase-input': {
             //     color: 'white', // or any other color
             //   },
-            //   '& .MuiOutlinedInput-root': {
-            //     '& fieldset': {
-            //       borderColor: 'dodgerblue',
-            //       borderRadius: '10px'
-            //     },
-            //     '&:hover fieldset': {
-            //       borderColor: 'dodgerblue',
-            //       borderRadius: '10px'
-            //     },
-            //     '&.Mui-focused fieldset': {
-            //       borderColor: 'dodgerblue',
-            //       borderRadius: '10px',
-            //       borderWidth: '2px'
-            //     },
             //   },
             sx={{
                 backgroundColor: 'black',
                 color: 'white',
                 '& .MuiSvgIcon-root': {
                   color: 'white',
+                },
+              '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'dodgerblue', 
+                  borderRadius: '5px',
+                  // borderWidth: '2px',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'dodgerblue',
+                  borderRadius: '5px',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'dodgerblue',
+                  borderRadius: '3px',
+                  borderWidth: '2px'
                 },
               }}
             MenuProps={{
