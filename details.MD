@@ -139,3 +139,13 @@ would not be using airflow. I'll just say I migrated away for cost saving by lik
 - top activity for homepage (ie. most transactions in a given timeframe)
 
 ### trying to copy the bloomberg terminal color scheme and styles
+- refer to this webpage by bloomberg on some style guidelines: https://www.bloomberg.com/company/stories/designing-the-terminal-for-color-accessibility/
+- neutral gold color. This can be used for standard text: #fea028
+- as far as I can tell, background is just black: #000000
+- if want a bit lighter, can try this color based on one of the charts from this article: https://www.investopedia.com/articles/professionaleducation/11/bloomberg-terminal.asp
+    - close to black for background: #203139
+- can use this color for their green: #014a0f
+- for alternating table row colors
+    - for the lighter shade, try using: #20232f
+    - for the darker shade, try using: #09040a
+- for the navbar, just try using black. Will look kinda similar to the actual bloomberg website + text title
