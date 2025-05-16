@@ -3,10 +3,12 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import { Select } from '@mui/material';
 import { Box } from '@mui/material';
 import { Transaction } from './types';
 import StackBars from './StackBars'
 import { useRef, useEffect, useState } from 'react';
+import '../index.css'
 // import { Box } from '@mui/material';
 
 const series = [{ data: [-2, -9, 12, 11, 6, -4] }];
@@ -108,10 +110,53 @@ export default function BarChart({transaction_data, set_transactions, transactio
     <Box sx={{ display: 'flex', flexDirection: 'inherit', justifyContent: 'center', width: '100%'}}>
         <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: '95%', margin: '0 auto', marginTop: 2}}>
         <Stack direction="row" spacing={1}>
-            <TextField
-            select
-            sx={{ minWidth: 150 }}
-            label="Timeframe"
+            <Select
+            // placeholder='Timeframe'
+            // sx={{ minWidth: 150, backgroundColor: 'black',
+            //   // label: {color: 'blue'},
+            //   '& .MuiInputBase-input': {
+            //     color: 'white', // or any other color
+            //   },
+            //   '& .MuiOutlinedInput-root': {
+            //     '& fieldset': {
+            //       borderColor: 'dodgerblue',
+            //       borderRadius: '10px'
+            //     },
+            //     '&:hover fieldset': {
+            //       borderColor: 'dodgerblue',
+            //       borderRadius: '10px'
+            //     },
+            //     '&.Mui-focused fieldset': {
+            //       borderColor: 'dodgerblue',
+            //       borderRadius: '10px',
+            //       borderWidth: '2px'
+            //     },
+            //   },
+            sx={{
+                backgroundColor: 'black',
+                color: 'white',
+                '& .MuiSvgIcon-root': {
+                  color: 'white',
+                },
+              }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  backgroundColor: 'black',
+                  color: 'white',
+                  // padding: 0,
+                  // borderRadius: 0,
+                },
+              },
+              MenuListProps: {
+                sx: {
+                  // padding: 0,
+                  // margin: 0,
+                },
+              },
+            }}
+            // color='error'
+            label=""
             value={timeframe}
             onChange={(event) => {
               set_timeframe(event.target.value as 'week' | 'month' | 'six months' | 'year')
@@ -121,11 +166,11 @@ export default function BarChart({transaction_data, set_transactions, transactio
               set_transactions(filtered_transaction_data)
             }}
             >
-            <MenuItem value="week">Week</MenuItem>
-            <MenuItem value="month">Month</MenuItem>
-            <MenuItem value="six-months">6 Months</MenuItem>
-            <MenuItem value="year">Year</MenuItem>
-            </TextField>
+            <MenuItem className="menu-item" value="week">Week</MenuItem>
+            <MenuItem className="menu-item" value="month">Month</MenuItem>
+            <MenuItem className="menu-item" value="six-months">6 Months</MenuItem>
+            <MenuItem className="menu-item" value="year">Year</MenuItem>
+            </Select>
         </Stack>
             <StackBars filing_data={filing_data} timeframe={timeframe}>
 

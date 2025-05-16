@@ -69,3 +69,22 @@ button:focus-visible {
 body {
   background-color: black;
 }
+
+li.menu-item {
+  background-color: black;
+  color: white;
+}
+
+li.menu-item:hover {
+  background-color: #282a35;
+  color: white;
+}
+
+.MuiMenuItem-root.Mui-selected {
+  background-color: #282a35 !important;
+  color: white;
+}
+
+/* .MuiMenuItem-root.Mui-selected:hover {
+  background-color: darkblue;
+} */
