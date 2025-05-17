@@ -13,6 +13,9 @@ import { useEffect, useState } from "react"
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { SvgIcon } from '@mui/material';
+import logo from './insiderinsight_logo.svg'
+// import { ReactComponent as Logo } from './insiderinsight_logo.svg';
 import Paper from '@mui/material/Paper';
 
 
@@ -101,7 +104,8 @@ export default function SearchAppBar() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+           <img src={logo} alt="icon" width={40} height={30} /> 
           </IconButton>
           <Typography
             // variant="h6"
