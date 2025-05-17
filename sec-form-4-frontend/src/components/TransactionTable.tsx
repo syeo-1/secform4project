@@ -112,7 +112,14 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
             <TableCell sx={{color: 'white'}} align="right">Transaction Share Price (USD)</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{
+          '& tr:nth-of-type(odd)': {
+            backgroundColor: '#09040a', // light gray
+          },
+          '& tr:nth-of-type(even)': {
+            backgroundColor: '#20232f', // white
+          },
+        }}>
           {formatted_transaction_data.map((row: any) => {
             // console.log("form 4 id: ", row.form_4_id)
             return (<TableRow
@@ -122,15 +129,15 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
                 }
             }
             >
-              <TableCell component="th" scope="row" sx={{backgroundColor: 'black', color: row.transaction_code === 'S' ? 'red' : 'green'}}>
+              <TableCell component="th" scope="row" sx={{color: row.transaction_code === 'S' ? 'red' : 'green'}}>
                 {format_transaction_code(row.transaction_code)}
               </TableCell>
-              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{format_acceptance_time(row.acceptance_time)}</TableCell>
-              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.issuer_name}</TableCell>
-              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.ticker_symbol}</TableCell>
-              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.reporting_owner_name}</TableCell>
-              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.num_transaction_shares}</TableCell>
-              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{`$${row.transaction_share_price}`}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{format_acceptance_time(row.acceptance_time)}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{row.issuer_name}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{row.ticker_symbol}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{row.reporting_owner_name}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{row.num_transaction_shares}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{`$${row.transaction_share_price}`}</TableCell>
             </TableRow>
             )})}
         </TableBody>
