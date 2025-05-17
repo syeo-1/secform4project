@@ -103,6 +103,7 @@ export default function SearchAppBar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={goHome}
           >
             {/* <MenuIcon /> */}
            <img src={logo} alt="icon" width={40} height={30} /> 
@@ -175,10 +176,10 @@ export default function SearchAppBar() {
                     backgroundColor: 'black',
                     color: 'white',
                     '&[aria-selected="true"]': {
-                      backgroundColor: '#333', // darker on select
+                      backgroundColor: 'white',
                     },
                     '&:hover': {
-                      backgroundColor: '#444', // darker on hover
+                      backgroundColor: '#282a35',
                     },
                   },
                 },
