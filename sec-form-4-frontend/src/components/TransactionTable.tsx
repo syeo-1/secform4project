@@ -122,15 +122,15 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
                 }
             }
             >
-              <TableCell component="th" scope="row" sx={{color: row.transaction_code === 'S' ? 'red' : 'green'}}>
+              <TableCell component="th" scope="row" sx={{backgroundColor: 'black', color: row.transaction_code === 'S' ? 'red' : 'green'}}>
                 {format_transaction_code(row.transaction_code)}
               </TableCell>
-              <TableCell align="right">{format_acceptance_time(row.acceptance_time)}</TableCell>
-              <TableCell align="right">{row.issuer_name}</TableCell>
-              <TableCell align="right">{row.ticker_symbol}</TableCell>
-              <TableCell align="right">{row.reporting_owner_name}</TableCell>
-              <TableCell align="right">{row.num_transaction_shares}</TableCell>
-              <TableCell align="right">{`$${row.transaction_share_price}`}</TableCell>
+              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{format_acceptance_time(row.acceptance_time)}</TableCell>
+              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.issuer_name}</TableCell>
+              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.ticker_symbol}</TableCell>
+              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.reporting_owner_name}</TableCell>
+              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{row.num_transaction_shares}</TableCell>
+              <TableCell sx={{color: '#fea028', backgroundColor: 'black'}} align="right">{`$${row.transaction_share_price}`}</TableCell>
             </TableRow>
             )})}
         </TableBody>
