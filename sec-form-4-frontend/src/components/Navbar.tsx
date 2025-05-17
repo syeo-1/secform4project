@@ -13,6 +13,8 @@ import { useEffect, useState } from "react"
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router';
+import Paper from '@mui/material/Paper';
+
 
 const BASE_URL = 'http://127.0.0.1:8000/api/'
 
@@ -57,6 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+// const customPaper = (props: any) => {
+//     return <Paper elevation={7} {...props} />;
+// }
 
 export default function SearchAppBar() {
 
@@ -104,11 +110,12 @@ export default function SearchAppBar() {
             sx={{ display: { xs: 'none', sm: 'block' },
             paddingRight: '65vw'
           }}
-          > 
+          >
             <h2 onClick={goHome} style={{cursor: 'pointer'}}>InsiderInsight</h2>
           </Typography>
 
           <Autocomplete
+          // TODO: handle the notch on the autocomplete search bar top left!!!!
             options={search_results_api}
             getOptionLabel={(option) => option}
             onInputChange={(_, newInputValue) => {
@@ -128,10 +135,51 @@ export default function SearchAppBar() {
             onHighlightChange={(_, option) => {
               setHighlightedOption(option);
             }}
-            sx={{ width: 300, backgroundColor: 'white', borderRadius: '10px', "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {borderColor: "black"}}}
-            renderInput={(params: any) => <TextField {...params} label="" placeholder="Search" />}
+            sx={{ width: 300,
+              backgroundColor: 'black', 
+              borderRadius: '10px', 
+              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {borderColor: "black"},
+              '& .MuiOutlinedInput-root': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'dodgerblue', // default border
+                // borderWidth: '2px',
+              },
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'dodgerblue', // hover effect
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'dodgerblue', // focus effect
+              },
+              input: {
+                color: 'white'
+              }
+            }}}
+            renderInput={(params: any) => <TextField 
+              {...params} 
+              label="" 
+              placeholder="Search" not/>}
             onKeyDown={handleKeyDown}
             onChange={handleLeftClick}
+            slotProps={{
+              popper: {
+                sx: {
+                  '& .MuiAutocomplete-paper': {
+                    backgroundColor: 'black',
+                    color: 'white',
+                  },
+                  '& .MuiAutocomplete-option': {
+                    backgroundColor: 'black',
+                    color: 'white',
+                    '&[aria-selected="true"]': {
+                      backgroundColor: '#333', // darker on select
+                    },
+                    '&:hover': {
+                      backgroundColor: '#444', // darker on hover
+                    },
+                  },
+                },
+              },
+            }}
             />
         </Toolbar>
       </AppBar>
