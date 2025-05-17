@@ -148,4 +148,6 @@ would not be using airflow. I'll just say I migrated away for cost saving by lik
 - for alternating table row colors
     - for the lighter shade, try using: #20232f
     - for the darker shade, try using: #09040a
+    - for the table header and border use:  #313a4d
+    - for the table header text, can just use white
 - for the navbar, just try using black. Will look kinda similar to the actual bloomberg website + text title
