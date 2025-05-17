@@ -96,7 +96,10 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
       <Table sx={{ minWidth: 650,
             borderWidth: '5px',
             borderColor: 'blue',
-            borderCollapse: 'collapse'
+            borderCollapse: 'collapse',
+            '& td, & th': {
+            border: 0,
+        },
        }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow sx={{
