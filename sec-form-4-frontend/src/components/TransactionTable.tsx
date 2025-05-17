@@ -85,17 +85,31 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
   // after fetching, store the rows in the array
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <TableContainer 
+      sx={{
+        border: '2px solid #313a4d',
+        borderRadius: '4px',
+        borderCollapse: 'blue'
+      }}
+      component={Paper}
+    >
+      <Table sx={{ minWidth: 650,
+            borderWidth: '5px',
+            borderColor: 'blue',
+            borderCollapse: 'collapse'
+       }} size="small" aria-label="a dense table">
         <TableHead>
-          <TableRow>
-            <TableCell>Transaction Type</TableCell>
-            <TableCell>Acceptance Time</TableCell>
-            <TableCell align="right">Company Name</TableCell>
-            <TableCell align="right">Symbol</TableCell>
-            <TableCell align="right">Reporting Owner</TableCell>
-            <TableCell align="right">Shares Traded</TableCell>
-            <TableCell align="right">Transaction Share Price (USD)</TableCell>
+          <TableRow sx={{
+            backgroundColor: '#313a4d',
+          }}
+        >
+            <TableCell sx={{color: 'white'}}>Transaction Type</TableCell>
+            <TableCell sx={{color: 'white'}}>Acceptance Time</TableCell>
+            <TableCell sx={{color: 'white'}} align="right">Company Name</TableCell>
+            <TableCell sx={{color: 'white'}} align="right">Symbol</TableCell>
+            <TableCell sx={{color: 'white'}} align="right">Reporting Owner</TableCell>
+            <TableCell sx={{color: 'white'}} align="right">Shares Traded</TableCell>
+            <TableCell sx={{color: 'white'}} align="right">Transaction Share Price (USD)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -103,7 +117,10 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
             // console.log("form 4 id: ", row.form_4_id)
             return (<TableRow
               key={row.form_4_id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={
+                { '&:last-child td, &:last-child th': { border: 0 },
+                }
+            }
             >
               <TableCell component="th" scope="row" sx={{color: row.transaction_code === 'S' ? 'red' : 'green'}}>
                 {format_transaction_code(row.transaction_code)}
