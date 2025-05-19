@@ -16,9 +16,9 @@ export default function NotableNames({data_list, title}: { data_list: string[], 
     return (
         <>
             <h2>{title}</h2>
-            <ol>
+            <ul>
                 {data_list_li}
-            </ol>
+            </ul>
         </>
     )
 }
