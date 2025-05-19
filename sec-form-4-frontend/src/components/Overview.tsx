@@ -28,7 +28,7 @@ export default function Overview() {
                         'William H Gates',
                         'Warren G Buffet',
                         'Reed Hastings'
-                    ]} title='Notable Names'/>
+                    ]} title='Notable Insiders'/>
                 </Grid>
             </Grid>
         </>

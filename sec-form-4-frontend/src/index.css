@@ -67,7 +67,8 @@ button:focus-visible {
   }
 } */
 body {
-  background-color: black;
+  /* background-color: black;  TODO: change back to black after developing out homescreen!!! */
+  background-color: grey;
 }
 
 li.menu-item {
@@ -83,6 +84,11 @@ li.menu-item:hover {
 .MuiMenuItem-root.Mui-selected {
   background-color: #282a35 !important;
   color: white;
+}
+
+.homepage-text {
+  color: white;
+  font-family: Helvetica;
 }
 
 /* .MuiMenuItem-root.Mui-selected:hover {

@@ -36,18 +36,18 @@ export default function OverviewCardInfo({title, transaction_type}: { title: str
     // get the 10 largest purchases
     const [top_transaction_data, set_top_transaction_data] = useState<Transaction[]>([])
     const [time_interval, set_time_interval] = useState("Day")
-    const [person_or_company, set_person_or_company] = useState("Person")
+    // const [person_or_company, set_person_or_company] = useState("Person")
     
     const handle_time_interval = (interval: string) => {
         set_time_interval(interval)
         // console.log(time_interval)
     }
 
-    const handle_person_or_company = (value: string) => {
-        // console.log("PERSON")
-        // console.log(value)
-        set_person_or_company(value)
-    }
+    // const handle_person_or_company = (value: string) => {
+    //     // console.log("PERSON")
+    //     // console.log(value)
+    //     set_person_or_company(value)
+    // }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,7 +66,7 @@ export default function OverviewCardInfo({title, transaction_type}: { title: str
         <>
             <h2>{title}</h2>
             <BasicMenu options={['Day','Week', 'Month', 'Year']} initial_title='Day' on_menu_change={handle_time_interval}/>
-            <BasicMenu options={['Person', 'Company']} initial_title='Person' on_menu_change={handle_person_or_company}/>
+            {/* <BasicMenu options={['Person', 'Company']} initial_title='Person' on_menu_change={handle_person_or_company}/> */}
             <ol>
                 {data_list_li}
             </ol>
