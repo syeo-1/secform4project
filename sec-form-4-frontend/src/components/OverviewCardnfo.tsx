@@ -29,7 +29,7 @@ async function retrieve_data(time_interval: string, transaction_type: string) {
     }
 }
 
-export default function OverviewCardInfo({title, transaction_type}: { title: string, transaction_type: string}) {
+export default function OverviewCardInfo({className, title, transaction_type}: { className: string, title: string, transaction_type: string}) {
 
 
 
@@ -60,16 +60,16 @@ export default function OverviewCardInfo({title, transaction_type}: { title: str
         fetchData();
     }, [time_interval]);
 
-    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li key={index}><><a href={`${BASE_FRONTEND_URL}info/${data_item.reporting_owner_name.replace(/ /g, "%20")}`}>{data_item.reporting_owner_name}</a></></li>);
+    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li className={className} key={index}><><a href={`${BASE_FRONTEND_URL}info/${data_item.reporting_owner_name.replace(/ /g, "%20")}`}>{data_item.reporting_owner_name}</a></></li>);
 
     return (
-        <>
+        <div className={className}>
             <h2>{title}</h2>
             <BasicMenu options={['Day','Week', 'Month', 'Year']} initial_title='Day' on_menu_change={handle_time_interval}/>
             {/* <BasicMenu options={['Person', 'Company']} initial_title='Person' on_menu_change={handle_person_or_company}/> */}
             <ol>
                 {data_list_li}
             </ol>
-        </>
+        </div>
     )
 }

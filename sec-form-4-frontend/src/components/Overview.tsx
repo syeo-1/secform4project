@@ -17,13 +17,13 @@ export default function Overview() {
         <>
             <Grid container>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo title="Top Sale Data" transaction_type="S"/>
+                    <OverviewCardInfo className="homepage-text" title="Top Sale Data" transaction_type="S"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4}}>
-                    <OverviewCardInfo title="Top Purchase Data" transaction_type="P"/>
+                    <OverviewCardInfo className="homepage-text" title="Top Purchase Data" transaction_type="P"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <NotableNames data_list={[
+                    <NotableNames className="homepage-text" data_list={[
                         'Elon Musk',
                         'William H Gates',
                         'Warren G Buffet',
