@@ -136,6 +136,20 @@ a:visited {
   color: white !important;
 }
 
+.homepage-overview-info-title {
+  /* border-width: 5px; */
+  /* border-color: red; */
+  color: white;
+  background-color: #282a35;
+  /* margin-right: 50%; */
+  /* margin: 0; */
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  /* display: inline-block; */
+}
+
 
 
 /* .MuiMenuItem-root.Mui-selected:hover {
