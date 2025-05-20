@@ -131,6 +131,12 @@ a:visited {
   cursor: pointer;
 }
 
+.MuiAutocomplete-option[aria-selected="true"] {
+  background-color: black !important;
+  color: white !important;
+}
+
+
 
 /* .MuiMenuItem-root.Mui-selected:hover {
   background-color: darkblue;
