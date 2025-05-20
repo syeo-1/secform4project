@@ -107,6 +107,31 @@ a:visited {
   color: #fea028;
 }
 
+/* .MuiAutocomplete-paper {
+  background-color: black;
+  color: white;
+}
+
+.MuiAutocomplete-option {
+  background-color: black;
+  color: white;
+}
+
+.MuiAutocomplete-option[aria-selected="true"] {
+  background-color: white;
+  color: black;
+}
+
+.MuiAutocomplete-option:hover {
+  background-color: #282a35;
+} */
+
+.MuiAutocomplete-paper .MuiAutocomplete-option:hover {
+  background-color: #282a35 !important;
+  cursor: pointer;
+}
+
+
 /* .MuiMenuItem-root.Mui-selected:hover {
   background-color: darkblue;
 } */

@@ -121,7 +121,27 @@ export default function SearchAppBar() {
 
           <Autocomplete
           // TODO: handle the notch on the autocomplete search bar top left!!!!
+            slotProps={{
+              paper: {
+                sx: {
+                  backgroundColor: 'black',
+                  color: 'white',
+                  '& .MuiAutocomplete-option': {
+                    backgroundColor: 'black',
+                    color: 'white',
+                    '&[aria-selected="true"]': {
+                      backgroundColor: 'white',
+                      color: 'black',
+                    },
+                    // '&:hover': {
+                    //   backgroundColor: '#282a35',
+                    // },
+                  },
+                },
+              },
+            }}
             options={search_results_api}
+            noOptionsText=""
             getOptionLabel={(option) => option}
             onInputChange={(_, newInputValue) => {
               fetch(`${BASE_URL}common/search/${newInputValue}`)
@@ -165,26 +185,26 @@ export default function SearchAppBar() {
               placeholder="Search" not/>}
             onKeyDown={handleKeyDown}
             onChange={handleLeftClick}
-            slotProps={{
-              popper: {
-                sx: {
-                  '& .MuiAutocomplete-paper': {
-                    backgroundColor: 'black',
-                    color: 'white',
-                  },
-                  '& .MuiAutocomplete-option': {
-                    backgroundColor: 'black',
-                    color: 'white',
-                    '&[aria-selected="true"]': {
-                      backgroundColor: 'white',
-                    },
-                    '&:hover': {
-                      backgroundColor: '#282a35',
-                    },
-                  },
-                },
-              },
-            }}
+            // slotProps={{
+            //   popper: {
+            //     sx: {
+            //       '& .MuiAutocomplete-paper': {
+            //         backgroundColor: 'black',
+            //         color: 'white',
+            //       },
+            //       '& .MuiAutocomplete-option': {
+            //         backgroundColor: 'black',
+            //         color: 'white',
+            //         '&[aria-selected="true"]': {
+            //           backgroundColor: 'white',
+            //         },
+            //         '&:hover': {
+            //           backgroundColor: '#282a35',
+            //         },
+            //       },
+            //     },
+            //   },
+            // }}
             />
         </Toolbar>
       </AppBar>
