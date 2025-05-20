@@ -27,7 +27,20 @@ export default function BasicMenu({options, initial_title, on_menu_change}: {opt
     setAnchorEl(null);
   };
 
-  const menu_list_options = options.map((option_item, index) => <MenuItem id={option_item} key={index} onClick={() => handleClose(option_item)}>{option_item}</MenuItem>);
+  const menu_list_options = options.map((option_item, index) => <MenuItem 
+    id={option_item}
+    key={index}
+    onClick={() => handleClose(option_item)}
+    sx={{
+      backgroundColor: 'black',
+      color: 'white',
+      '&:hover': {
+        backgroundColor: '#282a35'
+      }
+    }}
+    >
+      {option_item}
+  </MenuItem>);
 
   return (
     <div>
@@ -53,8 +66,17 @@ export default function BasicMenu({options, initial_title, on_menu_change}: {opt
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
+        // MenuListProps={{
+        //   'aria-labelledby': 'basic-button',
+        // }}
+        // MenuListProps={}
+        slotProps={{
+          paper: {
+            sx: {
+              boxShadow: 'none', // or apply a custom shadow
+            },
+          },
+          root: { sx: { '.MuiList-root': { padding: 0, margin: 0 } } }
         }}
       >
         {menu_list_options}
