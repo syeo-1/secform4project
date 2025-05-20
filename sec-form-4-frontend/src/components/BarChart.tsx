@@ -9,6 +9,7 @@ import { Transaction } from './types';
 import StackBars from './StackBars'
 import { useRef, useEffect, useState } from 'react';
 import '../index.css'
+import BarChartBig from './BarChartBig';
 // import { Box } from '@mui/material';
 
 const series = [{ data: [-2, -9, 12, 11, 6, -4] }];
@@ -175,6 +176,8 @@ export default function BarChart({transaction_data, set_transactions, transactio
             <StackBars filing_data={filing_data} timeframe={timeframe}>
 
             </StackBars>
+            {/* <BarChartBig></BarChartBig> */}
+
         </Stack>
     </Box>
   );

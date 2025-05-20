@@ -47,11 +47,9 @@ export default function BasicMenu({options, initial_title, on_menu_change}: {opt
       <Button
         sx={{
           color: 'white',
-          borderWidth: '2px',
-          borderColor: '#fea028',
           '&:hover': {
             textDecoration: 'underline'
-          } 
+          }, 
         }}
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}

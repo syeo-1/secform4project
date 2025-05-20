@@ -1,35 +1,76 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
+import { Data, Layout } from 'plotly.js'
 
-const BarChartBig = () => {
-  const numPoints = 10000;
-  const x = Array.from({ length: numPoints }, (_, i) => `Item ${i + 1}`);
-  const y = Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
+export default function BarChartBig({processed_filing_data}: {processed_filing_data: {
+  datetime: string;
+  total_purchase_value: number,
+  total_sale_value: number
+}[]}) {
+  const datetime_strings = processed_filing_data.map((filing_data) => filing_data.datetime)
+  const purchase_data = processed_filing_data.map((filing_data) => filing_data.total_purchase_value)
+  const sale_data = processed_filing_data.map((filing_data) => filing_data.total_sale_value)
+
+  const purchase_data_and_times: Data = {
+    x: datetime_strings,
+    y: purchase_data,
+    type: 'bar',
+    name: 'Purchases in USD',
+    marker: {
+      color: '#089981'
+    },
+    hoverinfo: 'x+y'
+  }
+
+  const sale_data_and_times: Data = {
+    x: datetime_strings,
+    y: sale_data,
+    type: 'bar',
+    name: 'Sales in USD',
+    marker: {
+      color: '#f23645'
+    }
+  }
+
+  const layout: Partial<Layout> = {
+    barmode: 'stack',
+    // width: '100%',
+    height: 400,
+    autosize: true,
+    paper_bgcolor: 'black',
+    plot_bgcolor: 'black',
+    hovermode: 'closest',
+    margin: {
+      t: 10,
+      b: 50
+    },
+    font: {
+      color: 'white'
+    },
+    xaxis: {
+      showgrid: true,
+      gridcolor: '#282a35',
+      gridwidth: 1,
+    },
+    yaxis: {
+      showgrid: true,
+      gridcolor: '#282a35',
+      gridwidth: 1,
+    }
+  };
 
   return (
-    <div style={{ width: '100%', height: '600px', overflowX: 'scroll' }}>
+    <div style={{ 
+      overflowX: 'auto',
+      backgroundColor: 'black',
+      width: '100%'
+    }}>
       <Plot
-        data={[
-          {
-            type: 'bar',
-            x: x,
-            y: y,
-            marker: { color: 'dodgerblue' },
-          },
-        ]}
-        layout={{
-          title: '10,000-Bar Chart',
-          xaxis: { title: 'Items', showticklabels: false },
-          yaxis: { title: 'Value' },
-          margin: { t: 50 },
-          bargap: 0.1,
-        }}
+        data={[purchase_data_and_times, sale_data_and_times]}
+        layout={layout}
         config={{ responsive: true }}
-        useResizeHandler
-        style={{ width: '100%', height: '100%' }}
+        style={{width: '100%'}}
       />
     </div>
   );
 };
-
-export default BarChartBig;

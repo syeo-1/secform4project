@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BarChart, BarChartProps } from '@mui/x-charts/BarChart';
 import { addLabels, balanceSheet } from './AddLabelStack';
+import BarChartBig from './BarChartBig';
 
 
 function get_last_n_day_strings(n: number): string[] {
@@ -106,40 +107,43 @@ export default function StackBars({filing_data, timeframe}: {filing_data: Map<an
   const processed_filing_data = process_filing_data_for_barchart(filing_data, timeframe)
 
   return (
-    <BarChart
-      sx={
+    <>
+      {/* <BarChart
+        sx={
+          {
+          '& .MuiChartsGrid-line': {
+            stroke: '#26252b',
+            strokeWidth: 1,
+          },
+        }
+        }
+        dataset={processed_filing_data}
+        series={addLabels([
+          { dataKey: 'total_purchase_value', stack: 'net_transaction_value', color: '#089981' },
+          { dataKey: 'total_sale_value', stack: 'net_transaction_value', color: '#f23645'},
+        ])}
+        xAxis={[{
+          scaleType: 'band',
+          dataKey: 'datetime',
+          tickLabelStyle: {fill: 'lightslategray'}
+      }]}
+      yAxis={[
         {
-        '& .MuiChartsGrid-line': {
-          stroke: '#26252b',
-          strokeWidth: 1,
-        },
-      }
-      }
-      dataset={processed_filing_data}
-      series={addLabels([
-        { dataKey: 'total_purchase_value', stack: 'net_transaction_value', color: '#089981' },
-        { dataKey: 'total_sale_value', stack: 'net_transaction_value', color: '#f23645'},
-      ])}
-      xAxis={[{
-        scaleType: 'band',
-        dataKey: 'datetime',
-        tickLabelStyle: {fill: 'lightslategray'}
-    }]}
-    yAxis={[
-      {
-        tickLabelStyle: {fill: 'lightslategray'}
-      }
-    ]}
-    grid={{
-      horizontal: true,
-      vertical: true
-    }}
-    //   yAxis={[{ width: 80 }]}
-    slotProps={{
-        legend: { hidden: true }
-    }}
-    margin={{left: 100}}
-    height={350}
-    />
+          tickLabelStyle: {fill: 'lightslategray'}
+        }
+      ]}
+      grid={{
+        horizontal: true,
+        vertical: true
+      }}
+      //   yAxis={[{ width: 80 }]}
+      slotProps={{
+          legend: { hidden: true }
+      }}
+      margin={{left: 100}}
+      height={350}
+      /> */}
+      <BarChartBig processed_filing_data={processed_filing_data}></BarChartBig>
+    </>
   );
 }
