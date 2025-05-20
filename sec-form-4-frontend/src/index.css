@@ -91,6 +91,22 @@ li.menu-item:hover {
   font-family: Helvetica;
 }
 
+a:link {
+  color:#fea028;
+  /* text-decoration: underline; */
+}
+
+a:hover {
+  /* color: #f58c02; */
+  color: #875b22;
+  /* text-decoration: underline; */
+  background-color: #282a35;
+}
+
+a:visited {
+  color: #fea028;
+}
+
 /* .MuiMenuItem-root.Mui-selected:hover {
   background-color: darkblue;
 } */
