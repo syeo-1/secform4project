@@ -150,6 +150,12 @@ a:visited {
   /* display: inline-block; */
 }
 
+.overview-timeframe-selection-button {
+  border-color: #fea028;
+  background-color: #282a35;
+  color: white;
+}
+
 
 
 /* .MuiMenuItem-root.Mui-selected:hover {

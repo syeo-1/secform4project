@@ -66,7 +66,7 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
     return (
         <div className={homepage_text_css}>
             <h3 className={css_class}>{title}</h3>
-            <BasicMenu options={['Day','Week', 'Month', 'Year']} initial_title='Day' on_menu_change={handle_time_interval}/>
+            <BasicMenu options={['Today','Week', 'Month', 'Year']} initial_title='Today' on_menu_change={handle_time_interval}/>
             {/* <BasicMenu options={['Person', 'Company']} initial_title='Person' on_menu_change={handle_person_or_company}/> */}
             <ol>
                 {data_list_li}
