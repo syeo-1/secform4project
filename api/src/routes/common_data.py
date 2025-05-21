@@ -7,10 +7,10 @@ from sqlalchemy import select, or_, distinct
 router = APIRouter()
 
 @router.get(
-    '/api/common/search/{query_string}',
+    '/api/common/search/',
     summary='get back all relevant queries via substring search for things in database'
 )
-def get_search_data(query_string: str, db: Session = Depends(get_db)):
+def get_search_data(db: Session = Depends(get_db)):
     '''
     gets unique values from the following columns for the search bar. Not case-sensitive
     
@@ -19,9 +19,12 @@ def get_search_data(query_string: str, db: Session = Depends(get_db)):
     ticker_symbol
     '''
 
-    unique_reporting_owner_query = select(distinct(Form_4_data.reporting_owner_name)).where(Form_4_data.reporting_owner_name.ilike(f'%{query_string}%'))
-    unique_issuer_name_query = select(distinct(Form_4_data.issuer_name)).where(Form_4_data.issuer_name.ilike(f'%{query_string}%'))
-    unique_ticker_symbol_query = select(distinct(Form_4_data.ticker_symbol)).where(Form_4_data.ticker_symbol.ilike(f'%{query_string}%'))
+    # unique_reporting_owner_query = select(distinct(Form_4_data.reporting_owner_name)).where(Form_4_data.reporting_owner_name.ilike(f'%{query_string}%'))
+    # unique_issuer_name_query = select(distinct(Form_4_data.issuer_name)).where(Form_4_data.issuer_name.ilike(f'%{query_string}%'))
+    # unique_ticker_symbol_query = select(distinct(Form_4_data.ticker_symbol)).where(Form_4_data.ticker_symbol.ilike(f'%{query_string}%'))
+    unique_reporting_owner_query = select(distinct(Form_4_data.reporting_owner_name))
+    unique_issuer_name_query = select(distinct(Form_4_data.issuer_name))
+    unique_ticker_symbol_query = select(distinct(Form_4_data.ticker_symbol))
 
     result = set()
 
