@@ -70,10 +70,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchAppBar() {
 
   const [search_results_api, set_search_results_api] = useState<string[]>([])
+  const [search_results_initial, set_search_results_initial] = useState<string[]>([])
   const [highlightedOption, setHighlightedOption] = useState<string | null>("");
   const [inputValue, setInputValue] = useState("")
   const [search_label, set_search_label] = useState("Search")
   const navigate = useNavigate()
+  
+  useEffect((() => {
+    fetch(`${BASE_URL}common/search/`)
+      .then((response) => response.json())
+      .then((json) => { set_search_results_initial(json)})
+    }
+  ), [])
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -144,15 +152,8 @@ export default function SearchAppBar() {
             noOptionsText=""
             getOptionLabel={(option) => option}
             onInputChange={(_, newInputValue) => {
-              fetch(`${BASE_URL}common/search/${newInputValue}`)
-                .then((response) => response.json())
-                .then((json) => { set_search_results_api(json)})
+              set_search_results_api(search_results_initial.filter(s => s.toLowerCase().includes(newInputValue.toLowerCase())))
               setInputValue(newInputValue)
-              // if (newInputValue.length > 0) {
-              //   set_search_label("")
-              // } else if (newInputValue.length == 0) {
-              //   set_search_label("Search")
-              // }
             }}
             onOpen={() => {
               set_search_label("")
