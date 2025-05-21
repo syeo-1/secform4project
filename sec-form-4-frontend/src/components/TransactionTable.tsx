@@ -8,6 +8,22 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Transaction } from './types';
 
+// function format_num_transaction_shares(transaction_shares: string) {
+//   // adds commas appropriately to the number of shares traded
+
+//   // get the length of the string
+//   const transaction_share_str_length = transaction_shares.length
+
+//   // mod 3
+//   // if result is 0, then it's (mod 3)-1, eg. 900,000,000
+//   let num_commas = Math.floor(transaction_share_str_length / 3)
+//   if ((transaction_share_str_length % 3) === 0) {
+//     num_commas -= 1 
+//   }
+
+//   // create empty array of length 
+// }
+
 function format_transaction_code(transaction_code: string) {
   // takes the P or S transaction code and returns the proper word for it
 
@@ -139,7 +155,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
               <TableCell sx={{color: '#fea028'}} align="right">{row.issuer_name}</TableCell>
               <TableCell sx={{color: '#fea028'}} align="right">{row.ticker_symbol}</TableCell>
               <TableCell sx={{color: '#fea028'}} align="right">{row.reporting_owner_name}</TableCell>
-              <TableCell sx={{color: '#fea028'}} align="right">{row.num_transaction_shares}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right">{row.num_transaction_shares.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
               <TableCell sx={{color: '#fea028'}} align="right">{`$${row.transaction_share_price}`}</TableCell>
             </TableRow>
             )})}
