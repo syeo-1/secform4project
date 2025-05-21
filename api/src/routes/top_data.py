@@ -64,7 +64,6 @@ def get_top_ten_sale_filings(time_interval, transaction_type, db: Session = Depe
         func.sum(Form_4_data.num_transaction_shares * Form_4_data.transaction_share_price).label("total_filing_transaction_value"),
         Form_4_data.original_form_4_text_url
     ).where(
-        # Form_4_data.transaction_code == 'S',
         Form_4_data.transaction_code == transaction_type,
         Form_4_data.transaction_share_price.isnot(None),
         Form_4_data.acceptance_time >= oldest_allowable_data_iso
@@ -92,29 +91,3 @@ def get_top_ten_sale_filings(time_interval, transaction_type, db: Session = Depe
 
     return data
 
-@router.get(
-        '/api/common/{data}',
-        summary='Get Transaction Related to a Specific Company Name'
-    )
-def get_company_name_data(data: str, db: Session = Depends(get_db)):
-    '''get transactions related to piece of common data'''
-
-    # check if data is in any one of the given columns
-    query_statement = select(Form_4_data).where(
-            or_(
-                Form_4_data.issuer_name == data,
-                Form_4_data.reporting_owner_name == data,
-                Form_4_data.ticker_symbol == data
-            )
-        )
-    result = db.execute(query_statement)
-    data = result.scalars().all()
-
-    return data
-
-
-
-@router.get("/test")
-def test_route():
-    print("Test route hit!")
-    return {"message": "working"}
