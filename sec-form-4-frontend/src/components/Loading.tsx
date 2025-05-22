@@ -1,8 +1,14 @@
+import { OrbitProgress } from "react-loading-indicators"
 
 export default function Loading() {
   return (
     <>
-      <h1>Page is Loading!!</h1>
+      <OrbitProgress style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+        color="white" size="medium" text="" textColor=""
+      />
     </>
   )
 }
