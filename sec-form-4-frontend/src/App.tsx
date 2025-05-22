@@ -25,7 +25,7 @@ function Layout() {
       backgroundColor: 'black',
       color: 'white',
       minHeight: '100vh',
-      padding: '1rem'
+      padding: '1rem',
     }}>
       <Outlet />
     </div>
