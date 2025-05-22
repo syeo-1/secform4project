@@ -4,6 +4,7 @@
 import { Transaction } from './types';
 import BasicMenu from './BasicMenu';
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
 
 // interface OverviewPropData {
 //     // fetch_data: () => Promise<(string | any[])[]>;
@@ -37,11 +38,13 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
     const [top_transaction_data, set_top_transaction_data] = useState<Transaction[]>([])
     const [time_interval, set_time_interval] = useState("Day")
     // const [person_or_company, set_person_or_company] = useState("Person")
+    const navigate = useNavigate()
     
     const handle_time_interval = (interval: string) => {
         set_time_interval(interval)
         // console.log(time_interval)
     }
+    
 
     // const handle_person_or_company = (value: string) => {
     //     // console.log("PERSON")
@@ -61,7 +64,7 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
         fetchData();
     }, [time_interval]);
 
-    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li className={homepage_text_css} key={index}><><a href={`${BASE_FRONTEND_URL}info/${data_item.reporting_owner_name.replace(/ /g, "%20")}`}>{data_item.reporting_owner_name}</a></></li>);
+    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${data_item.reporting_owner_name.replace(/ /g, "%20")}`}>{data_item.reporting_owner_name}</a></></li>);
 
     return (
         <div className={homepage_text_css}>

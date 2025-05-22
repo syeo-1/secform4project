@@ -2,9 +2,11 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Info from './pages/Info'
-import Home from './pages/Home'
-import { BrowserRouter as Router, Route, Routes } from 'react-router'
+// import Info from './pages/Info'
+// import Home from './pages/Home'
+import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router'
+import { Suspense, lazy } from 'react';
+import Loading from './components/Loading';
 
 // example url with parameter: http://localhost:5173/info/reporting_owner/steve
 // must include the parameter for the url to work!
@@ -14,47 +16,38 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router'
 
 const BASE_URL = 'http://127.0.0.1:8000/api/'
 
+const Home = lazy(() => import('./pages/Home'));
+const Info = lazy(() => import('./pages/Info'));
+
+function Layout() {
+  return (
+    <div style={{
+      backgroundColor: 'black',
+      color: 'white',
+      minHeight: '100vh',
+      padding: '1rem'
+    }}>
+      <Outlet />
+    </div>
+  );
+}
+
 function App() {
 
-  const ticker = "BTCS"
-  // fetch(`${BASE_URL}ticker/${ticker}`)
-  //   .then(res => {
-  //     if (res.ok) {
-  //       console.log('success')
-  //     } else {
-  //       console.log('not successful')
-  //     }
-  //   })
-  //   .then(data => console.log(data))
-  //   .catch(error => console.log(error))
-
-  // const get_ticker_info  = async () => {
-  //   try {
-  //     const response = await fetch(`${BASE_URL}ticker/${ticker}`)
-  //     const data = await response.json()
-  //     console.log(data)
-  //   } catch(error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // get_ticker_info()
-
-  
-  // console.log(fetch(`${BASE_URL}ticker/${ticker}`))
-  
   return (
     <Router>
-      <Routes>
-        <Route path='/' element={<Home />}>
-        </Route>
-        <Route path='/info' element={<Info />}>
-          <Route path=':data' element={<Info />}/>
-          {/* <Route path='company_name/:company_name' element={<Info />}/>
-          <Route path='ticker/:ticker' element={<Info />}/>
-          <Route path='reporting_owner/:reporting_owner' element={<Info />}/> */}
-        </Route>
-      </Routes>
+      <Suspense fallback={<Loading/>}>
+        <Routes>
+          <Route path='/' element={<Home />}>
+          </Route>
+          <Route path='/info' element={<Info />}>
+            <Route path=':data' element={<Info />}/>
+            {/* <Route path='company_name/:company_name' element={<Info />}/>
+            <Route path='ticker/:ticker' element={<Info />}/>
+            <Route path='reporting_owner/:reporting_owner' element={<Info />}/> */}
+          </Route>
+        </Routes>
+      </Suspense>
     </Router>
   )
 }

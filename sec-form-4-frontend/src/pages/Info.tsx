@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
 import TransactionTable from '../components/TransactionTable'
 import BarChart from '../components/BarChart'
+import Loading from '../components/Loading'
 import { Transaction } from '../components/types'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
@@ -29,7 +30,6 @@ export default function Info() {
   const [transaction_data_copy, set_transaction_data_copy] = useState<Transaction[]>([])
 
   useEffect(() => {
-    // console.log(`data value is: ${data}`)
     const fetchData = async () => {
         const transaction_data_rows_api = await get_transaction_row_data(data);
         if (transaction_data_rows_api) {

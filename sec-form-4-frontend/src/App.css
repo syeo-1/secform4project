@@ -40,3 +40,10 @@
 .read-the-docs {
   color: #888;
 } */
+#root, #__next {
+  background-color: black;
+  /* min-height: 100vh; */
+}
+html, body {
+  background-color: 'black';
+}
