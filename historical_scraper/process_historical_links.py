@@ -11,27 +11,33 @@ from pprint import pformat
 from load import upload_form_4_data
 from config import *
 from historical_data_scraper import *
+import concurrent.futures
+import multiprocessing
+import time
 
+
+def threaded_function(func, data):
+    # get the total number of available processors
+    # max num cpus is actually 16 for local development
+    # num_cpus = multiprocessing.cpu_count()
+
+    # use at most 10 threads since SEC only allows 10 requests per second as per
+    # https://www.sec.gov/about/webmaster-frequently-asked-questions#code-support
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        return executor.map(func, data)
 
 # form_links = file_links_creator()
-form_links = []
 
-with open('historical_data_links_1_year.txt', 'r', encoding='utf-16') as file:
-    # count = 0
-    for line in file:
-        # print(line.rstrip('\n'))
-        form_links.append(line.rstrip('\n'))
-        # print(line.encode('utf-8'))
-        # form_links.append(line)
-        # print(line)
-# print(form_links)
-# exit(0)
+def get_form_data(link):
+    # takes a url link and gets the data for it for the filing form
+    all_processed_form_4_data = []
 
-all_processed_form_4_data = []
+    # print(' in get form data!')
 
-for link in form_links:
     try:
         form_data = requests.get(link, headers=HEADERS).content
+        # ensure very unlikely for program to exceed 10 request per second limit
+        time.sleep(1)
     except requests.exceptions.ConnectionError as connection_error:
         logging.info(f'A connection error occured when trying to connect to the resourcce: {connection_error}')
     except requests.exceptions.ConnectTimeout as timeout_connection:
@@ -45,12 +51,37 @@ for link in form_links:
     except Exception as e:
         logging.info(f'An unexpected error occured, please check: {e}')
 
-    form_4_soup = xml_to_soup(form_data)
+    # print('end of get form data try block')
 
+    form_4_soup = xml_to_soup(form_data)
     all_processed_form_4_data.extend(extract_non_derivative_form_4_info(form_4_soup, link))
 
+    return all_processed_form_4_data
 
-filtered_form_data = filter_out_form_4_data(all_processed_form_4_data)
-# print(filtered_form_data)
 
-upload_form_4_data(DB_USER, DB_NAME, DB_PASSWORD, HOST, filtered_form_data)
+
+def main():
+    form_links = []
+
+    # with open('historical_data_links_1_year_strict.txt', 'r', encoding='utf-16') as file:
+    with open('historical_data_links_1_year_strict.txt', 'r', encoding='utf-16') as file:
+        for line in file:
+            form_links.append(line.rstrip('\n'))
+    
+    all_processed_form_data = threaded_function(get_form_data, form_links)
+
+    all_data_to_process_together = []
+    for form_data_list in all_processed_form_data:
+        if form_data_list:
+            all_data_to_process_together.extend(form_data_list)
+
+    # for data in all_data_to_process_together:
+    #     print(data)
+
+    # TODO: use line below when ready to insert the data into the db
+    upload_form_4_data(DB_USER, DB_NAME, DB_PASSWORD, HOST, all_data_to_process_together)
+
+
+
+if __name__ == '__main__':
+    main()

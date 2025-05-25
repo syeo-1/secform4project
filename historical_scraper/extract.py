@@ -14,7 +14,7 @@ import time
 # https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data
 # also comment by u/tomtomato0414: https://www.reddit.com/r/webscraping/comments/mpgyil/sec_filings/
 HEADERS = {
-    'User-agent': 'example@gmail.com',
+    'User-agent': 'example2@gmail.com',
     'Accept-Encoding': 'gzip, deflate',
     'Host': 'www.sec.gov'
 }

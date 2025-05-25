@@ -62,9 +62,30 @@ def generate_form_4_historical_data(form_links):
 
     return historical_form_4_links
 
-
-def generate_quarter_date_ranges_iso8601(year, quarter):
+def generate_date_ranges_one_year_iso8601():
     '''
+        gives back all the date strings from up to and including 365 days ago
+
+        excludes the current date
+    '''
+
+    todays_date = date.today()
+    year_ago = todays_date - timedelta(days=365)
+
+    running_date = year_ago
+
+    date_strings = []
+    while running_date < todays_date:
+        date_strings.append(running_date.strftime("%Y%m%d"))
+        running_date += timedelta(days=1)
+
+    return date_strings
+
+
+def generate_quarter_date_ranges_iso8601(year, quarter, year_ago):
+    '''
+        at most, only give dates to 1 year ago (365 days)
+    
         given the year and the quarter, generate list of strings
         in iso8601 format all the dates within that quarter
 
@@ -99,7 +120,8 @@ def generate_quarter_date_ranges_iso8601(year, quarter):
     end_date = datetime.strptime(chosen_quarter_mapping['end'], '%Y%m%d').date()
 
     while running_date <= end_date and running_date < todays_date:
-        quarter_date_range_list.append(running_date.strftime('%Y%m%d'))
+        if running_date >= year_ago:
+            quarter_date_range_list.append(running_date.strftime('%Y%m%d'))
         running_date += timedelta(days=1)
 
     return quarter_date_range_list
@@ -113,10 +135,13 @@ def get_quarter_data_links():
     quarter_links = []
     current_year = datetime.now().year
     # print(current_year)
+    year_ago = date.today() - timedelta(days=365)
 
     for year in range(current_year-1, current_year+1):
         for quarter_num in range(1,5):
-            quarter_dates = generate_quarter_date_ranges_iso8601(year, quarter_num)
+            if year == 2024 and quarter_num == 1:
+                continue
+            quarter_dates = generate_quarter_date_ranges_iso8601(year, quarter_num, year_ago)
             for quarter_date in quarter_dates:
                 url = f'https://www.sec.gov/Archives/edgar/daily-index/{year}/QTR{quarter_num}/form.{quarter_date}.idx'
                 quarter_links.append(url)
@@ -127,6 +152,9 @@ def file_links_creator():
     quarter_file_links = get_quarter_data_links()
     historical_form_4_data_links = generate_form_4_historical_data(quarter_file_links)
 
+    # for file_link in quarter_file_links:
+    #     print(file_link)
+
     for historical_data_link in historical_form_4_data_links:
         print(historical_data_link)
     # return historical_form_4_data_links
@@ -134,3 +162,5 @@ def file_links_creator():
 
 if __name__ == '__main__':
     file_links_creator()
+    # test = generate_date_ranges_one_year_iso8601()
+    # print(test)
