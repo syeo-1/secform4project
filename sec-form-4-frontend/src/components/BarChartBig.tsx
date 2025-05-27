@@ -33,7 +33,7 @@ export default function BarChartBig({processed_filing_data}: {processed_filing_d
   }
 
   const layout: Partial<Layout> = {
-    barmode: 'stack',
+    barmode: 'relative',
     // width: '100%',
     height: 400,
     autosize: true,

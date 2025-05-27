@@ -37,7 +37,7 @@ function timeframe_filter_transaction_data(transaction_data: Transaction[], time
     oldest_allowable_date.setDate(now.getDate() - 180)
   } else if (timeframe === 'year') {
     oldest_allowable_date.setDate(now.getDate() - 365)
-  }
+  } 
 
   transaction_data.forEach((transaction_element) => {
     const transaction_element_acceptance_time_iso = new Date(transaction_element.acceptance_time)
@@ -171,6 +171,8 @@ export default function BarChart({transaction_data, set_transactions, transactio
             <MenuItem className="menu-item" value="month">Month</MenuItem>
             <MenuItem className="menu-item" value="six-months">6 Months</MenuItem>
             <MenuItem className="menu-item" value="year">Year</MenuItem>
+            {/* <MenuItem className="menu-item" value="two-year">2 Years</MenuItem>
+            <MenuItem className="menu-item" value="five-year">5 Years</MenuItem> */}
             </Select>
         </Stack>
             <StackBars filing_data={filing_data} timeframe={timeframe}>
