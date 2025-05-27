@@ -8,6 +8,9 @@ from datetime import datetime, timedelta
 import pytz
 import re
 from itertools import count
+from transform import filter_out_form_4_data
+from load import upload_form_4_data
+from config import *
 import time
 
 # refer to fair access section
@@ -40,8 +43,10 @@ def extract_data_from_SEC_file_url(url_list, extraction_function):
 
 
 
-def extract_non_derivative_form_4_info(soup, link):
+def etl_non_derivative_form_4_info(soup, link):
     '''
+    does the whole etl process for a non derivative price transaction
+
     takes a soup object of xml data and extracts the following fields from form 4
 
     returns the data below in a list of python tuples
@@ -177,7 +182,7 @@ def extract_non_derivative_form_4_info(soup, link):
         )
         # print('===')
 
-        all_extracted_non_derivative_data.append({
+        data_to_load = [{
             'reporting_owner_name': reporting_owner_name,
             'issuer_name': issuer_name,
             'ticker_symbol': ticker_symbol,
@@ -193,10 +198,14 @@ def extract_non_derivative_form_4_info(soup, link):
             'ownership_form': ownership_form,
             'original_form_4_text_url': link
             # extraction_time
-        })
+        }]
+
+        filtered_data = filter_out_form_4_data(data_to_load)
+        upload_form_4_data(DB_USER, DB_NAME, DB_PASSWORD, HOST, filtered_data)
 
 
-    return all_extracted_non_derivative_data
+
+    # return all_extracted_non_derivative_data
 
     # a = soup.find_all('nonDerivativeTransaction')
     # print(a)
