@@ -24,6 +24,10 @@ import { Transaction } from './types';
 //   // create empty array of length 
 // }
 
+function format_form_4_url(form_4_url: string) {
+  return form_4_url.slice(0, -4) + "-index.htm"
+}
+
 function format_transaction_code(transaction_code: string) {
   // takes the P or S transaction code and returns the proper word for it
 
@@ -65,6 +69,7 @@ function createData(transaction_element: Transaction) {
   const num_transaction_shares = transaction_element.num_transaction_shares
   const transaction_share_price = transaction_element.transaction_share_price
   const form_4_id = transaction_element.form_4_id
+  const form_4_url = transaction_element.original_form_4_text_url
   return {
     transaction_code,
     acceptance_time,
@@ -73,7 +78,8 @@ function createData(transaction_element: Transaction) {
     reporting_owner_name,
     num_transaction_shares,
     transaction_share_price,
-    form_4_id
+    form_4_id,
+    form_4_url
   }
 }
 
@@ -129,6 +135,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
             <TableCell sx={{color: 'white'}} align="right">Reporting Owner</TableCell>
             <TableCell sx={{color: 'white'}} align="right">Shares Traded</TableCell>
             <TableCell sx={{color: 'white'}} align="right">Transaction Share Price (USD)</TableCell>
+            <TableCell sx={{color: 'white'}} align="right">Filing</TableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={{
@@ -157,6 +164,7 @@ export default function DenseTable({transaction_data}: {transaction_data: Transa
               <TableCell sx={{color: '#fea028'}} align="right">{row.reporting_owner_name}</TableCell>
               <TableCell sx={{color: '#fea028'}} align="right">{row.num_transaction_shares.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
               <TableCell sx={{color: '#fea028'}} align="right">{`$${row.transaction_share_price}`}</TableCell>
+              <TableCell sx={{color: '#fea028'}} align="right"><a href={format_form_4_url(row.form_4_url)} target='_blank'>link</a></TableCell>
             </TableRow>
             )})}
         </TableBody>
