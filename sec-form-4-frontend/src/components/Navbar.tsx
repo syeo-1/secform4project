@@ -148,7 +148,7 @@ export default function SearchAppBar() {
                 },
               },
             }}
-            options={search_results_api}
+            options={search_results_api.slice(0, 75)}
             noOptionsText=""
             getOptionLabel={(option) => option}
             onInputChange={(_, newInputValue) => {

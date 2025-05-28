@@ -17,10 +17,10 @@ export default function Overview() {
         <>
             <Grid container>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <OverviewCardInfo homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" title="Top Sale Data" transaction_type="S"/>
+                    <OverviewCardInfo homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" title="Top Sale Filing Data" transaction_type="S"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4}}>
-                    <OverviewCardInfo homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" title="Top Purchase Data" transaction_type="P"/>
+                    <OverviewCardInfo homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" title="Top Purchase Filing Data" transaction_type="P"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
                     <NotableNames homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" data_list={[
