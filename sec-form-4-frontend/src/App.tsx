@@ -7,7 +7,6 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router'
 import { Suspense, lazy } from 'react';
 import Loading from './components/Loading';
-import SectorOverview from './pages/SectorOverview'
 
 // example url with parameter: http://localhost:5173/info/reporting_owner/steve
 // must include the parameter for the url to work!
@@ -19,7 +18,6 @@ const BASE_URL = 'http://127.0.0.1:8000/api/'
 
 const Home = lazy(() => import('./pages/Home'));
 const Info = lazy(() => import('./pages/Info'));
-const IndustryOverview = lazy(() => import ('./pages/SectorOverview'))
 
 function Layout() {
   return (
@@ -47,8 +45,6 @@ function App() {
             {/* <Route path='company_name/:company_name' element={<Info />}/>
             <Route path='ticker/:ticker' element={<Info />}/>
             <Route path='reporting_owner/:reporting_owner' element={<Info />}/> */}
-          </Route>
-          <Route path='SectorOverview' element={<SectorOverview />}>
           </Route>
         </Routes>
       </Suspense>
