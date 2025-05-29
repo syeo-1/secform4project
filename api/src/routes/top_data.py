@@ -145,46 +145,5 @@ def get_top_ten_activity_filings(time_interval, db: Session = Depends(get_db)):
     ).limit(10)
 
     top_tickers = db.execute(query).scalars().all()
-    column_names = [
-        "reporting_owner_name",
-        "issuer_name",
-        "ticker_symbol",
-        "acceptance_time",
-        "total_filing_transaction_value",
-        "original_form_4_text_url"
-    ]
 
-    print(type(top_tickers))
-    print(top_tickers)
-
-    top_ticker_data_rows = []
-
-    for ticker in top_tickers:
-        top_ticker_query = select(
-            Form_4_data.reporting_owner_name,
-            Form_4_data.issuer_name,
-            Form_4_data.ticker_symbol,
-            Form_4_data.acceptance_time,
-            func.sum(Form_4_data.num_transaction_shares * Form_4_data.transaction_share_price).label("total_filing_transaction_value"),
-            Form_4_data.original_form_4_text_url
-        ).where(
-            Form_4_data.ticker_symbol == ticker,
-            Form_4_data.transaction_share_price.isnot(None),
-            Form_4_data.acceptance_time >= oldest_allowable_data_iso
-        ).group_by(
-            Form_4_data.reporting_owner_name,
-            Form_4_data.issuer_name,
-            Form_4_data.ticker_symbol,
-            Form_4_data.acceptance_time,
-            Form_4_data.original_form_4_text_url
-        )
-        
-        top_ticker_rows = db.execute(top_ticker_query).all()
-        top_ticker_rows_processed = [dict(zip(column_names, row)) for row in top_ticker_rows] 
-        top_ticker_data_rows.extend(top_ticker_rows_processed)
-        # break
-        
-    return {
-        'top_tickers': top_tickers,
-        'top_ticker_data_rows': top_ticker_data_rows
-    }
+    return top_tickers 
