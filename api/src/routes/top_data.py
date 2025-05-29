@@ -128,18 +128,19 @@ def get_top_ten_activity_filings(time_interval, db: Session = Depends(get_db)):
     # first, get the top ten tickers with the most transactions by counting the
     # number of rows and getting the top ten highest count
 
-    frequency = func.count(Form_4_data.ticker_symbol).label('frequency')
+    frequency = func.count(Form_4_data.issuer_name).label('frequency')
 
     query = select(
         
-            Form_4_data.ticker_symbol,
+            Form_4_data.issuer_name,
             frequency
         
     ).where(
         Form_4_data.transaction_share_price.isnot(None),
-        Form_4_data.acceptance_time >= oldest_allowable_data_iso
+        Form_4_data.acceptance_time >= oldest_allowable_data_iso,
+        Form_4_data.transaction_code == 'P'
     ).group_by(
-        Form_4_data.ticker_symbol,
+        Form_4_data.issuer_name,
     ).order_by(
         desc(frequency)
     ).limit(10)
