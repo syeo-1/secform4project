@@ -14,28 +14,37 @@ import { useNavigate } from 'react-router';
 const BASE_API_URL = 'http://127.0.0.1:8000/api/'
 const BASE_FRONTEND_URL = 'http://localhost:5173/'
 
-async function retrieve_data(time_interval: string, transaction_type: string) {
+async function retrieve_data(time_interval: string, transaction_type?: string) {
     // TODO: modify this function to get the proper data using function parameters
     // const ticker = "DUOL"
     try {
-      const response = await fetch(`${BASE_API_URL}common/top_filings/?time_interval=${time_interval}&transaction_type=${transaction_type}`)
+      let response
+    
+      if (transaction_type != null) {
+        response = await fetch(`${BASE_API_URL}common/top_filings/?time_interval=${time_interval}&transaction_type=${transaction_type}`)
+        const data = await response.json()
+        //   console.log(`the value of the data is ${data}`)
+        return data as Transaction[]
+      } else {
+        response = await fetch(`${BASE_API_URL}common/top_activity/?time_interval=${time_interval}`)
+        const data = await response.json()
+        return data as string[]
+      }
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-      const data = await response.json()
-    //   console.log(`the value of the data is ${data}`)
-      return data as Transaction[]
     } catch(error) {
       console.log("testing")
     }
 }
 
-export default function OverviewCardInfo({homepage_text_css, homepage_title_css, title, transaction_type}: { homepage_text_css: string, homepage_title_css: string, title: string, transaction_type: string}) {
+export default function OverviewCardInfo({homepage_text_css, homepage_title_css, title, transaction_type}: { homepage_text_css: string, homepage_title_css: string, title: string, transaction_type?: string}) {
 
 
 
     // get the 10 largest purchases
-    const [top_transaction_data, set_top_transaction_data] = useState<Transaction[]>([])
+    const [top_transaction_data, set_top_transaction_data] = useState<Transaction[] | string[]>([])
+    const [top_activity_tickers, set_top_activity_tickers] = useState<Transaction[] | string[]>([])
     const [time_interval, set_time_interval] = useState("Day")
     // const [person_or_company, set_person_or_company] = useState("Person")
     const navigate = useNavigate()
@@ -55,16 +64,29 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await retrieve_data(time_interval, transaction_type);
-            if (result) {
-                set_top_transaction_data(result)
+            let transaction_result
+            let ticker_result: Transaction[] | string[] | undefined
+            if (transaction_type != null) {
+              transaction_result = await retrieve_data(time_interval, transaction_type);
+            } else {
+              ticker_result = await retrieve_data(time_interval);
+            }
+            if (transaction_result && transaction_type != null) {
+                set_top_transaction_data(transaction_result)
+            } else if (ticker_result && transaction_type == null) {
+                set_top_activity_tickers(ticker_result)
             }
         };
 
         fetchData();
     }, [time_interval]);
 
-    const data_list_li = top_transaction_data.map((data_item: Transaction, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${data_item.reporting_owner_name.replace(/ /g, "%20")}`}>{data_item.reporting_owner_name}</a></></li>);
+    let data_list_li
+    if (transaction_type != null) {
+      data_list_li = top_transaction_data.map((data_item: Transaction | string, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${(data_item as Transaction).reporting_owner_name.replace(/ /g, "%20")}`}>{(data_item as Transaction).reporting_owner_name}</a></></li>);
+    } else {
+      data_list_li = top_activity_tickers.map((data_item: Transaction | string, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${data_item}`}>{data_item as string}</a></></li>);
+    }
 
     return (
         <div className={homepage_text_css}>

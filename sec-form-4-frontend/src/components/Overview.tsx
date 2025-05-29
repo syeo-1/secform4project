@@ -23,12 +23,7 @@ export default function Overview() {
                     <OverviewCardInfo homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" title="Top Purchase Filing Data" transaction_type="P"/>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                    <NotableNames homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" data_list={[
-                        'Elon Musk',
-                        'William H Gates',
-                        'Warren G Buffet',
-                        'Reed Hastings'
-                    ]} title='Notable Insiders'/>
+                    <OverviewCardInfo homepage_text_css="homepage-text" homepage_title_css="homepage-overview-info-title" title="Top Activity Stock Ticker"/>
                 </Grid>
             </Grid>
         </>
