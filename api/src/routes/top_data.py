@@ -96,7 +96,7 @@ def get_top_ten_sale_filings(time_interval, transaction_type, db: Session = Depe
         '/api/common/top_activity',
         summary='get top 10 data by sale price (no time interval as of yet)'
     )
-def get_top_ten_activity_filings(time_interval, db: Session = Depends(get_db)):
+def get_top_ten_activity_filings(time_interval, purchase, db: Session = Depends(get_db)):
     '''
         get top 10 activity company data
 
@@ -109,7 +109,6 @@ def get_top_ten_activity_filings(time_interval, db: Session = Depends(get_db)):
 
     eastern = ZoneInfo("America/New_York")
     now_et = datetime.now(eastern)
-
 
     match time_interval:
         case 'Day':
@@ -130,20 +129,33 @@ def get_top_ten_activity_filings(time_interval, db: Session = Depends(get_db)):
 
     frequency = func.count(Form_4_data.issuer_name).label('frequency')
 
-    query = select(
-        
+    if purchase == 'y':
+        query = select(
+            
+                Form_4_data.issuer_name,
+                frequency
+            
+        ).where(
+            Form_4_data.transaction_share_price.isnot(None),
+            Form_4_data.acceptance_time >= oldest_allowable_data_iso,
+            Form_4_data.transaction_code == 'P'
+        ).group_by(
             Form_4_data.issuer_name,
-            frequency
-        
-    ).where(
-        Form_4_data.transaction_share_price.isnot(None),
-        Form_4_data.acceptance_time >= oldest_allowable_data_iso,
-        Form_4_data.transaction_code == 'P'
-    ).group_by(
-        Form_4_data.issuer_name,
-    ).order_by(
-        desc(frequency)
-    ).limit(10)
+        ).order_by(
+            desc(frequency)
+        ).limit(10)
+    else:
+        query = select(
+                Form_4_data.issuer_name,
+                frequency
+        ).where(
+            Form_4_data.transaction_share_price.isnot(None),
+            Form_4_data.acceptance_time >= oldest_allowable_data_iso
+        ).group_by(
+            Form_4_data.issuer_name,
+        ).order_by(
+            desc(frequency)
+        ).limit(10)
 
     top_tickers = db.execute(query).scalars().all()
 
