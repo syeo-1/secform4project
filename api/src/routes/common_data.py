@@ -53,7 +53,8 @@ def get_all_ticker_symbol_data(db: Session = Depends(get_db)):
 
 
 @router.get(
-        '/api/common/transaction/{data}',
+        '/api/common/transaction/{data:path}',
+        name="path-converter",
         summary='Get Transaction Related to a Specific Company Name'
     )
 def get_company_name_data(data: str, db: Session = Depends(get_db)):
