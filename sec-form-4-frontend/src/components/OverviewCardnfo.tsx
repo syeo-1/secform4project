@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router';
 const BASE_API_URL = 'http://127.0.0.1:8000/api/'
 const BASE_FRONTEND_URL = 'http://localhost:5173/'
 
-async function retrieve_data(time_interval: string, transaction_type?: string) {
+async function retrieve_data(time_interval: string, purchase_activity: string, transaction_type?: string) {
     // TODO: modify this function to get the proper data using function parameters
     // const ticker = "DUOL"
     try {
@@ -26,9 +26,16 @@ async function retrieve_data(time_interval: string, transaction_type?: string) {
         //   console.log(`the value of the data is ${data}`)
         return data as Transaction[]
       } else {
-        response = await fetch(`${BASE_API_URL}common/top_activity/?time_interval=${time_interval}`)
-        const data = await response.json()
-        return data as string[]
+        if (purchase_activity === 'y') {
+            console.log(purchase_activity)
+            response = await fetch(`${BASE_API_URL}common/top_activity/?time_interval=${time_interval}&purchase=${purchase_activity}`)
+            const data = await response.json()
+            return data as string[]
+        } else {
+            response = await fetch(`${BASE_API_URL}common/top_activity/?time_interval=${time_interval}&purchase=n`)
+            const data = await response.json()
+            return data as string[]
+        }
       }
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -38,7 +45,7 @@ async function retrieve_data(time_interval: string, transaction_type?: string) {
     }
 }
 
-export default function OverviewCardInfo({homepage_text_css, homepage_title_css, title, transaction_type}: { homepage_text_css: string, homepage_title_css: string, title: string, transaction_type?: string}) {
+export default function OverviewCardInfo({homepage_text_css, homepage_title_css, title, transaction_type, purchase_activity}: { homepage_text_css: string, homepage_title_css: string, title: string, transaction_type?: string, purchase_activity?: string}) {
 
 
 
@@ -67,9 +74,13 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
             let transaction_result
             let ticker_result: Transaction[] | string[] | undefined
             if (transaction_type != null) {
-              transaction_result = await retrieve_data(time_interval, transaction_type);
+              transaction_result = await retrieve_data(time_interval, 'n', transaction_type);
             } else {
-              ticker_result = await retrieve_data(time_interval);
+              if (purchase_activity) {
+                ticker_result = await retrieve_data(time_interval, purchase_activity);
+              } else {
+                ticker_result = await retrieve_data(time_interval, 'n');
+              }
             }
             if (transaction_result && transaction_type != null) {
                 set_top_transaction_data(transaction_result)
@@ -91,7 +102,7 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
     return (
         <div className={homepage_text_css}>
             <h3 className={css_class}>{title}</h3>
-            <BasicMenu options={['Today','Week', 'Month', 'Year']} initial_title='Today' on_menu_change={handle_time_interval}/>
+            <BasicMenu options={['24 HRS','Week', 'Month', 'Year']} initial_title='24 HRS' on_menu_change={handle_time_interval}/>
             {/* <BasicMenu options={['Person', 'Company']} initial_title='Person' on_menu_change={handle_person_or_company}/> */}
             <ol>
                 {data_list_li}
