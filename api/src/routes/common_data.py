@@ -35,6 +35,24 @@ def get_search_data(db: Session = Depends(get_db)):
     return list(result)
 
 @router.get(
+        '/api/common/all_tickers',
+        summary='retrieve all ticker symbols used in insider trading from most recent 365 days'
+)
+def get_all_ticker_symbol_data(db: Session = Depends(get_db)):
+    '''
+        returns a list of unique ticker symbol strings from insider trading from the
+        last 365 days
+    '''
+    unique_ticker_symbol_query = select(distinct(Form_4_data.ticker_symbol))
+
+    result = set()
+
+    result.update(db.execute(unique_ticker_symbol_query).scalars().all())
+    
+    return list(result)
+
+
+@router.get(
         '/api/common/transaction/{data}',
         summary='Get Transaction Related to a Specific Company Name'
     )

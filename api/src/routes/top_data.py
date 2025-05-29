@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from ..models import Form_4_data
 from sqlalchemy.orm import Session
 from ..database import get_db
-from sqlalchemy import select, or_, func, distinct
+from sqlalchemy import select, or_, func, distinct, desc
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -91,3 +91,100 @@ def get_top_ten_sale_filings(time_interval, transaction_type, db: Session = Depe
 
     return data
 
+
+@router.get(
+        '/api/common/top_activity',
+        summary='get top 10 data by sale price (no time interval as of yet)'
+    )
+def get_top_ten_activity_filings(time_interval, db: Session = Depends(get_db)):
+    '''
+        get top 10 activity company data
+
+        ie. within a given timeframe, see which companies have had the most activity total
+
+        (the greatest number of sales and purchases in the given timeframe)
+    '''
+
+    oldest_allowable_data_iso = None
+
+    eastern = ZoneInfo("America/New_York")
+    now_et = datetime.now(eastern)
+
+
+    match time_interval:
+        case 'Day':
+            oldest_allowable_data = now_et - timedelta(days=1)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+        case 'Week':
+            oldest_allowable_data = now_et - timedelta(days=7)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+        case 'Month':
+            oldest_allowable_data = now_et - timedelta(days=30)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+        case 'Year':
+            oldest_allowable_data = now_et - timedelta(days=365)
+            oldest_allowable_data_iso = oldest_allowable_data.isoformat()
+
+    # first, get the top ten tickers with the most transactions by counting the
+    # number of rows and getting the top ten highest count
+
+    frequency = func.count(Form_4_data.ticker_symbol).label('frequency')
+
+    query = select(
+        
+            Form_4_data.ticker_symbol,
+            frequency
+        
+    ).where(
+        Form_4_data.transaction_share_price.isnot(None),
+        Form_4_data.acceptance_time >= oldest_allowable_data_iso
+    ).group_by(
+        Form_4_data.ticker_symbol,
+    ).order_by(
+        desc(frequency)
+    ).limit(10)
+
+    top_tickers = db.execute(query).scalars().all()
+    column_names = [
+        "reporting_owner_name",
+        "issuer_name",
+        "ticker_symbol",
+        "acceptance_time",
+        "total_filing_transaction_value",
+        "original_form_4_text_url"
+    ]
+
+    print(type(top_tickers))
+    print(top_tickers)
+
+    top_ticker_data_rows = []
+
+    for ticker in top_tickers:
+        top_ticker_query = select(
+            Form_4_data.reporting_owner_name,
+            Form_4_data.issuer_name,
+            Form_4_data.ticker_symbol,
+            Form_4_data.acceptance_time,
+            func.sum(Form_4_data.num_transaction_shares * Form_4_data.transaction_share_price).label("total_filing_transaction_value"),
+            Form_4_data.original_form_4_text_url
+        ).where(
+            Form_4_data.ticker_symbol == ticker,
+            Form_4_data.transaction_share_price.isnot(None),
+            Form_4_data.acceptance_time >= oldest_allowable_data_iso
+        ).group_by(
+            Form_4_data.reporting_owner_name,
+            Form_4_data.issuer_name,
+            Form_4_data.ticker_symbol,
+            Form_4_data.acceptance_time,
+            Form_4_data.original_form_4_text_url
+        )
+        
+        top_ticker_rows = db.execute(top_ticker_query).all()
+        top_ticker_rows_processed = [dict(zip(column_names, row)) for row in top_ticker_rows] 
+        top_ticker_data_rows.extend(top_ticker_rows_processed)
+        # break
+        
+    return {
+        'top_tickers': top_tickers,
+        'top_ticker_data_rows': top_ticker_data_rows
+    }
