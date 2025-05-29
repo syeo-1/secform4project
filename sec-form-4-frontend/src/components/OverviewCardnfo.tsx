@@ -96,7 +96,7 @@ export default function OverviewCardInfo({homepage_text_css, homepage_title_css,
     if (transaction_type != null) {
       data_list_li = top_transaction_data.map((data_item: Transaction | string, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${(data_item as Transaction).reporting_owner_name.replace(/\//g, "%2F")}`}>{(data_item as Transaction).reporting_owner_name}</a></></li>);
     } else {
-      data_list_li = top_activity_tickers.map((data_item: Transaction | string, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${data_item}`}>{data_item as string}</a></></li>);
+      data_list_li = top_activity_tickers.map((data_item: Transaction | string, index: number) => <li className={homepage_text_css} key={index} ><><a href={`${BASE_FRONTEND_URL}info/${(data_item as string).replace(/\//g, "%2F")}`}>{data_item as string}</a></></li>);
     }
 
     return (
