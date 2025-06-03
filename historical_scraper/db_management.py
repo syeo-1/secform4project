@@ -137,7 +137,8 @@ def remove_data_older_than_one_year():
 
     for older_row in older_than_year_data:
         # find the same row in the form 4 table and remove it
-        built_query = ['SELECT * FROM public.form_4_data WHERE ']
+        # built_query = ['SELECT * FROM public.form_4_data WHERE '] # use this to double check rows being deleted
+        built_query = ['DELETE FROM public.form_4_data WHERE '] # delete the rows!
         try:
             filtered_old_row = []
             for i, element in enumerate(older_row):
@@ -156,13 +157,15 @@ def remove_data_older_than_one_year():
 
             cursor.execute(full_built_query, tuple(filtered_old_row))
 
-            selected_row = cursor.fetchall()
-            if len(selected_row) > 0:
-                print(selected_row)
-            else:
-                print(f'no match for: {older_row}')
+            # use with the initial select statement built_query to see the rows that will be deleted
+            # print(cursor.fetchall())
+
+            # commit to the row being deleted from the table
+            # use in combination with the initial delete statement built query
+            connection.commit()
+
         except psycopg2.Error as postgres_error:
-            print(f'Error in selecting all rows from form 4 table: {postgres_error}')
+            print(f'Error in row removal: {postgres_error}')
 
 
 
