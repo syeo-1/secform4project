@@ -14,6 +14,22 @@ import requests
 import time
 import itertools
 from bs4 import BeautifulSoup
+from datetime import timedelta, datetime
+# import os
+# import sys
+# sys.path.append('/opt/airflow/common_functions')
+from extract import scrape_for_SEC_form, etl_non_derivative_form_4_info, xml_to_soup, HEADERS
+from transform import filter_out_form_4_data
+from bs4 import BeautifulSoup
+import requests
+import logging
+from pprint import pformat
+from load import upload_form_4_data
+from config import *
+from historical_data_scraper import *
+import concurrent.futures
+import multiprocessing
+import time
 
 HEADERS = {
     'User-agent': 'example@gmail.com',
@@ -22,6 +38,48 @@ HEADERS = {
 }
 
 # WEBDRIVER = webdriver.Firefox(executable_path = DRIVER_PATH, options = FIREFOX_OPTIONS)
+
+def threaded_function(func, data):
+    # get the total number of available processors
+    # max num cpus is actually 16 for local development
+    num_cpus = multiprocessing.cpu_count()
+
+    if num_cpus > 10:
+        num_cpus = 10
+
+    # use at most 10 threads since SEC only allows 10 requests per second as per
+    # https://www.sec.gov/about/webmaster-frequently-asked-questions#code-support
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_cpus) as executor:
+        return executor.map(func, data)
+
+
+def get_form_data(link):
+    # takes a url link and gets the data for it for the filing form
+    all_processed_form_4_data = []
+
+    # print(' in get form data!')
+
+    try:
+        form_data = requests.get(link, headers=HEADERS).content
+        # ensure very unlikely for program to exceed 10 request per second limit
+        time.sleep(2)
+    except requests.exceptions.ConnectionError as connection_error:
+        logging.info(f'A connection error occured when trying to connect to the resourcce: {connection_error}')
+    except requests.exceptions.ConnectTimeout as timeout_connection:
+        logging.info(f'A connection timeout error occured: {timeout_connection}')
+    except requests.exceptions.HTTPError as http_error:
+        logging.info(f'An http error occured: {http_error}')
+    except requests.exceptions.InvalidURL as url_error:
+        logging.info(f'An invalid url error occured: {url_error}')
+    except requests.exceptions.InvalidHeader as http_header_error:
+        logging.info(f'An invalid http header error occured: {http_header_error}')
+    except Exception as e:
+        logging.info(f'An unexpected error occured, please check: {e}')
+
+    # print('end of get form data try block')
+
+    form_4_soup = xml_to_soup(form_data)
+    etl_non_derivative_form_4_info(form_4_soup, link)
 
 def extract_form_4_text_file_links(file_link):
     '''
@@ -150,13 +208,22 @@ def get_quarter_data_links():
 
 def file_links_creator():
     quarter_file_links = get_quarter_data_links()
-    historical_form_4_data_links = generate_form_4_historical_data(quarter_file_links)
+
+    # ensure links are ordered in most recent first
+    historical_form_4_data_links = reversed(generate_form_4_historical_data(quarter_file_links))
+
+    # process all the links
+    all_processed_form_data = threaded_function(get_form_data, historical_form_4_data_links)
+
+
+
 
     # for file_link in quarter_file_links:
     #     print(file_link)
 
-    for historical_data_link in historical_form_4_data_links:
-        print(historical_data_link)
+    # for historical_data_link in reversed(historical_form_4_data_links):
+    #     # make sure most recent is first
+    #     print(historical_data_link)
     # return historical_form_4_data_links
 
 

@@ -68,7 +68,7 @@ def main():
         for line in file:
             form_links.append(line.rstrip('\n'))
     
-    all_processed_form_data = threaded_function(get_form_data, form_links[7060:])
+    all_processed_form_data = threaded_function(get_form_data, form_links)
 
     all_data_to_process_together = []
     for form_data_list in all_processed_form_data:
