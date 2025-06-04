@@ -89,16 +89,21 @@ def extract_form_4_text_file_links(file_link):
     all_file_form_4_links = []
     base_url = 'https://www.sec.gov/Archives/'
 
-    response = requests.get(file_link, headers=HEADERS)
-    response_status_code = response.status_code
-
+    # for the most current date, try to handle an exception for it
+    # in case the data for today/most current date is not ready yet
+    try:
+        response = requests.get(file_link, headers=HEADERS)
+        response_status_code = response.status_code
+    except Exception as e:
+        print(f'an exception occured: {e}')
+        return
 
     # print(response_status_code)
     if response_status_code == 200:
         file_content = response.content.split(b'\n')
         for line in file_content:
             split_line = line.split()
-            if len(split_line) > 0 and split_line[0] == b'4':
+            if len(split_line) > 0 and split_line[0] == b'4': # only get form 4 data
                 all_file_form_4_links.append(base_url + split_line[-1].decode('utf-8'))
 
     return all_file_form_4_links
@@ -133,7 +138,7 @@ def generate_date_ranges_one_year_iso8601():
     running_date = year_ago
 
     date_strings = []
-    while running_date < todays_date:
+    while running_date <= todays_date:
         date_strings.append(running_date.strftime("%Y%m%d"))
         running_date += timedelta(days=1)
 
@@ -177,7 +182,7 @@ def generate_quarter_date_ranges_iso8601(year, quarter, year_ago):
     running_date = datetime.strptime(chosen_quarter_mapping['start'], '%Y%m%d').date()
     end_date = datetime.strptime(chosen_quarter_mapping['end'], '%Y%m%d').date()
 
-    while running_date <= end_date and running_date < todays_date:
+    while running_date <= end_date and running_date <= todays_date:
         if running_date >= year_ago:
             quarter_date_range_list.append(running_date.strftime('%Y%m%d'))
         running_date += timedelta(days=1)
