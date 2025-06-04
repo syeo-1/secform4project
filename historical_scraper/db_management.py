@@ -51,6 +51,10 @@ def data_exists_in_table(transaction_to_check, table_name):
 
         if it does, return True, otherwise, return False
     '''
+
+    if len(transaction_to_check) == 0:
+        return True
+
     # connect to the database
     connection = psycopg2.connect(f'dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={HOST}')
     cursor = connection.cursor()

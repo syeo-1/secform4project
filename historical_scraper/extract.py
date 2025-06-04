@@ -12,6 +12,7 @@ from transform import filter_out_form_4_data
 from load import upload_form_4_data
 from config import *
 import time
+from db_management import data_exists_in_table
 
 # refer to fair access section
 # https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data
@@ -43,7 +44,7 @@ def extract_data_from_SEC_file_url(url_list, extraction_function):
 
 
 
-def etl_non_derivative_form_4_info(soup, link):
+def etl_non_derivative_form_4_info(soup, link, return_on_existing_data=True):
     '''
     does the whole etl process for a non derivative price transaction
 
@@ -163,23 +164,23 @@ def etl_non_derivative_form_4_info(soup, link):
             ownership_form = None
         # extraction_time = datetime.now(eastern_timezone).strftime(DATETIME_FORMAT)
 
-        print(
-            reporting_owner_name,
-            issuer_name,
-            ticker_symbol,
-            acceptance_time_formatted,
-            security_title,
-            transaction_date,
-            deemed_execution_date,
-            transaction_code,
-            num_transaction_shares,
-            acquired_or_dispose,
-            transaction_share_price,
-            amount_owned_after_transaction,
-            ownership_form,
-            link
-            # extraction_time
-        )
+        # print(
+        #     reporting_owner_name,
+        #     issuer_name,
+        #     ticker_symbol,
+        #     acceptance_time_formatted,
+        #     security_title,
+        #     transaction_date,
+        #     deemed_execution_date,
+        #     transaction_code,
+        #     num_transaction_shares,
+        #     acquired_or_dispose,
+        #     transaction_share_price,
+        #     amount_owned_after_transaction,
+        #     ownership_form,
+        #     link
+        #     # extraction_time
+        # )
         # print('===')
 
         data_to_load = [{
@@ -201,7 +202,14 @@ def etl_non_derivative_form_4_info(soup, link):
         }]
 
         filtered_data = filter_out_form_4_data(data_to_load)
-        upload_form_4_data(DB_USER, DB_NAME, DB_PASSWORD, HOST, filtered_data)
+
+        if not data_exists_in_table(filtered_data, 'form_4_data'):
+            upload_form_4_data(DB_USER, DB_NAME, DB_PASSWORD, HOST, filtered_data)
+
+            print(filtered_data[0])
+        elif data_exists_in_table(filtered_data, 'form_4_data') and return_on_existing_data:
+            # stop iterating through the data and the threaded function
+            return
 
 
 
