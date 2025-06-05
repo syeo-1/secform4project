@@ -44,7 +44,7 @@ def extract_data_from_SEC_file_url(url_list, extraction_function):
 
 
 
-def etl_non_derivative_form_4_info(soup, link, return_on_existing_data=True):
+def etl_non_derivative_form_4_info(soup, link, return_on_existing_data=True, cutoff_date=datetime.now()-timedelta(days=365)):
     '''
     does the whole etl process for a non derivative price transaction
 
@@ -89,6 +89,10 @@ def etl_non_derivative_form_4_info(soup, link, return_on_existing_data=True):
     try:
         acceptance_time_unformatted = soup.select('ACCEPTANCE-DATETIME')[0].text.split()[0]
         datetime_obj = datetime.strptime(acceptance_time_unformatted, '%Y%m%d%H%M%S')
+
+        if datetime_obj < cutoff_date:
+            return
+
         acceptance_time_formatted = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
         # print(f'acceptance time is: {acceptance_time}')
         if acceptance_time_formatted == '':
@@ -164,23 +168,23 @@ def etl_non_derivative_form_4_info(soup, link, return_on_existing_data=True):
             ownership_form = None
         # extraction_time = datetime.now(eastern_timezone).strftime(DATETIME_FORMAT)
 
-        # print(
-        #     reporting_owner_name,
-        #     issuer_name,
-        #     ticker_symbol,
-        #     acceptance_time_formatted,
-        #     security_title,
-        #     transaction_date,
-        #     deemed_execution_date,
-        #     transaction_code,
-        #     num_transaction_shares,
-        #     acquired_or_dispose,
-        #     transaction_share_price,
-        #     amount_owned_after_transaction,
-        #     ownership_form,
-        #     link
-        #     # extraction_time
-        # )
+        print(
+            reporting_owner_name,
+            issuer_name,
+            ticker_symbol,
+            acceptance_time_formatted,
+            security_title,
+            transaction_date,
+            deemed_execution_date,
+            transaction_code,
+            num_transaction_shares,
+            acquired_or_dispose,
+            transaction_share_price,
+            amount_owned_after_transaction,
+            ownership_form,
+            link
+            # extraction_time
+        )
         # print('===')
 
         data_to_load = [{
@@ -206,7 +210,7 @@ def etl_non_derivative_form_4_info(soup, link, return_on_existing_data=True):
         if not data_exists_in_table(filtered_data, 'form_4_data'):
             upload_form_4_data(DB_USER, DB_NAME, DB_PASSWORD, HOST, filtered_data)
 
-            print(filtered_data[0])
+            print(f'new data inserted: {filtered_data[0]}')
         elif data_exists_in_table(filtered_data, 'form_4_data') and return_on_existing_data:
             # stop iterating through the data and the threaded function
             return

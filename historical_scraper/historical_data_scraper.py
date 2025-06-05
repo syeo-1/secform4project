@@ -79,7 +79,7 @@ def get_form_data(link):
     # print('end of get form data try block')
 
     form_4_soup = xml_to_soup(form_data)
-    etl_non_derivative_form_4_info(form_4_soup, link, return_on_existing_data=True)
+    etl_non_derivative_form_4_info(form_4_soup, link, return_on_existing_data=False, cutoff_date=datetime.now()-timedelta(days=5))
 
 def extract_form_4_text_file_links(file_link):
     '''
@@ -216,6 +216,10 @@ def extract_and_store_new_data():
 
     # ensure links are ordered in most recent first
     historical_form_4_data_links = reversed(generate_form_4_historical_data(quarter_file_links))
+
+    # for link in historical_form_4_data_links:
+    #     print(link)
+    # exit(0)
 
     # process all the links
     threaded_function(get_form_data, historical_form_4_data_links)

@@ -33,3 +33,8 @@ amount_owned_after_transaction,
 ownership_form,
 original_form_4_text_url
 HAVING COUNT(*) > 1;
+
+-- get all data for today from form_4_data table
+SELECT *
+FROM public.form_4_data
+WHERE DATE(acceptance_time) = CURRENT_DATE;
