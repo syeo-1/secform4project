@@ -94,6 +94,10 @@ li.menu-item:hover {
   font-family: Helvetica;
 }
 
+.homepage-about {
+  padding: 0 1%;
+}
+
 a:link {
   color:#fea028;
   /* text-decoration: underline; */

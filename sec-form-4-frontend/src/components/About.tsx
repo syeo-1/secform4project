@@ -4,7 +4,7 @@ export default function About() {
     return (
         <>
             {/* <h1>Welcome!</h1> */}
-            <p className="homepage-text">
+            <p className="homepage-text homepage-about">
                 With all the uncertainty within the financial markets that occurs day-to-day, wouldn't it be nice to
                 know what people with insider knowledge are up to? Introducing InsiderInsight! This
                 web application is dedicated to tracking insider trading activity across US financial markets using public filing
