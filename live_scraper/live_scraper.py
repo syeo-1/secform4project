@@ -27,13 +27,6 @@ if os.path.exists(filename) and os.path.isfile(filename):
         seen_links = [link.strip() for link in f]
 
 new_links = [link for link in form_links if link not in seen_links]
-print(new_links)
-print('===')
-if seen_links:
-    # print(seen_links)
-    print('seen_links exists!')
-    exit(0)
-
 
 for link in new_links:
     try:
