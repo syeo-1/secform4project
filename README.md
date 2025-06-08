@@ -19,11 +19,9 @@ The project has been built using the following list of technologies
 - devops: see if I can incorporate deploy on push to AWS with github actions
 
 ## Technical challenges
-- didn't know any front end starting out, so really just learned it as I went. Code quality is something to be desired...
 - redoing the chart components to save money so that I can get better performance using plotly graphs
     - improves rendering time/performance plus I get features like pan and zoom for free!
     - material ui charges a premium fee for that, which I didn't want to pay for
-- don't know how to use public cloud platforms, so also learning as I go
 
 ## What I've learned
 - front end development with React, Typescript, MUI, Plotly
