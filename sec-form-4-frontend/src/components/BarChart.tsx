@@ -55,7 +55,7 @@ function timeframe_filter_transaction_data(transaction_data: Transaction[], time
 }
 
 export default function BarChart({transaction_data, set_transactions, transaction_data_copy}: {transaction_data: Transaction[], set_transactions: React.Dispatch<React.SetStateAction<Transaction[]>>, transaction_data_copy: Transaction[]}) {
-  const [timeframe, set_timeframe] = useState("month")
+  const [timeframe, set_timeframe] = useState("year")
   const has_run = useRef(false)
 
   const filing_data = new Map()
