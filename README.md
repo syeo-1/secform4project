@@ -27,6 +27,7 @@ The project has been built using the following list of technologies
 - Backend:
     - API:
         - the FastAPI app will run on an EC2 instance. An alternative would be to use a combination of AWS API Gateway and AWS Lambda. However, from what I've read, using AWS Lambda would require cold starts for API calls, which would be a massive performance hit to the amount of time it takes to retrieve data via the API. using a plain EC2 instance will be a bit more complicated to set up, but there won't be cold starts, so users should have an overall better experience with how long it takes to retrieve data.
+        - At the same time, if I want to run some basic selects on the Postgres instance for healthchecks, I can connect through the EC2 instance as well.
     - Database:
         - This is probably the most straight forward. Postgres will be used for the db enginer and RDS is the most logical option. Specifically, since I'm using the free tier which should give me 20GB of storage for free, which is more than enough at this point.
     - Database Updates:
